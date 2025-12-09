@@ -4,15 +4,17 @@
     box-sizing: border-box;
 }
 
+/**/
 body {
-    display: flex;
+    display: flex; 
 
     width: 200px;
     height: auto;
 
     margin-left: 20px;
 }
-
+/**/
+/**/
 .cabecalho {
     display: flex;
     flex-direction: row;
@@ -23,7 +25,7 @@ body {
     height: 65px;
 
 }
-
+/**/
 .menu_esquerdo_tudo {
     /* border-right: 0.5px dotted #000000; */
     
@@ -33,6 +35,7 @@ body {
     padding: 0px 10px 0px 0px;
 }
 
+/**/
 .menu_esquerdo a {
     position: fixed;
 
@@ -43,13 +46,14 @@ body {
 
     cursor: pointer;
 }
-
+/**/
+/**/
 .menu_esquerdo span {
     margin: 4px;
     
     border: 1px solid black;
 }
-
+/**/
 .traco {
     display: flex;
     background-color: black;
@@ -57,7 +61,8 @@ body {
     width: 18px;
     height: 2px;
 }
-
+/**/
+/**/
 .logo_cabecalho {
     margin: 0px 40px 0px 40px;
     /* margin-left: 25px; */
@@ -66,6 +71,7 @@ body {
     height: 24px;
 
 }
+/**/
 
 .navbar1 {
     display: flex;
