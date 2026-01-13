@@ -7,6 +7,39 @@ body {
     background-color: black;
 }
 
+#my_projects_return {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+    z-index: 20;
+}
+
+#my_projects_return a {
+    text-decoration: none;
+    font-size: 20px;
+    
+    padding: 10px 20px;
+    
+    color: black;
+    
+    background-color: white;
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+#my_projects_return a:hover {
+    background: rgba(255, 255, 255, 0.215);
+    border-radius: 10px;
+    border: 2px solid black;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
 #dvd{
     position: absolute;
     /*top: 0%; 96%*/
@@ -17,3 +50,4 @@ body {
     text-align: center;
     color: white;
 }
+

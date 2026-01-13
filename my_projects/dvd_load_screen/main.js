@@ -22,3 +22,22 @@ setInterval(() => {
     dvd.style.left = `${left}%`;
 
 }, 100);
+
+
+let space = false;
+const myProjectsReturn = document.querySelector("#my_projects_return");
+
+window.addEventListener("keydown", event => {
+
+    if (event.shiftKey && event.key === " " && !event.repeat) {
+        space = !space;
+
+        if (space === true) {
+            myProjectsReturn.classList.remove("hidden");
+
+        }else {
+            myProjectsReturn.classList.add("hidden");
+        }
+    }
+
+});
