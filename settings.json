@@ -1,0 +1,6 @@
+// Desabilitando o auto complete nas configurações do VS Code
+{
+    "editor.quickSuggestions": false,
+    "editor.suggestOnTriggerCharacters": false,
+    "editor.wordBasedSuggestions": false
+}

@@ -1,0 +1,19 @@
+body {
+    margin: 0;
+
+    height: 100%;
+    width: 100%;
+
+    background-color: black;
+}
+
+#dvd{
+    position: absolute;
+    /*top: 0%; 96%*/
+    /*left: 0%; 95%*/
+
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
