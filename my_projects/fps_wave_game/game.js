@@ -226,9 +226,6 @@ function updateDebugUI(){
     coordsElement.innerHTML = `<span style="color: red;">x</span>: ${player.position.x.toFixed(2)}` + " | " + `<span style="color: limegreen;">y</span>: ${player.position.y.toFixed(2)}` + " | " + `<span style="color: blue;">z</span>: ${player.position.z.toFixed(2)}`;
 }
 
-//Cor da Skybox//
-scene.background = new THREE.Color(0x87ceeb);
-
 //Booleanas para a rotação e RGB do cubo//
 let cubeRotation = false;
 let cubeColorRGB = false;
@@ -236,15 +233,15 @@ let cubeColorRGB = false;
 // const ambientLight = new THREE.AmbientLight(0xFFFFFF, 1.5);
 // scene.add(ambientLight);
 
+//Sol//
 const sunLight = new THREE.DirectionalLight(0xFFFFFF, 3);
-// sunLight.position.set(100, 80, -250);
 
 //Randomiza a posição do 'sunLight' no eixo x e z, entre 0 a 100 e 0 a -250 respectivamente
 sunLight.position.set(Math.floor(Math.random() * 100), 80, Math.floor(Math.random() * -250));
-// console.log(sunLight.position);
 sunLight.castShadow = true;
-scene.add(sunLight);
+// scene.add(sunLight);
 
+//Cria o Mesh do Sol
 const sun = new THREE.Mesh(
     new THREE.PlaneGeometry(30,30),
     new THREE.MeshBasicMaterial({color: 0xffdd33, side: THREE.DoubleSide})
@@ -252,9 +249,56 @@ const sun = new THREE.Mesh(
 
 sun.position.copy(sunLight.position); // Copia a posição da luz
 sun.lookAt(0, 0, 0); // Faz o sol olhar para o centro da cena
-scene.add(sun); // Adiciona o sol à cena
+// scene.add(sun); // Adiciona o sol à cena
+//Sol//
 
-// Configurar câmera de sombra
+//Lua//
+const moonLight = new THREE.DirectionalLight(0x5151b0, 2);
+
+//Randomiza a posição do 'moonLight' no eixo x e z, entre 0 a 100 e 0 a -250 respectivamente
+moonLight.position.set(Math.floor(Math.random() * 100), 80, Math.floor(Math.random() * -250));
+moonLight.castShadow = true;
+// scene.add(moonLight);
+
+const moon = new THREE.Mesh(
+    new THREE.PlaneGeometry(30, 30),
+    new THREE.MeshBasicMaterial({color: 0xFFFFFF, side: THREE.DoubleSide})
+)
+
+moon.position.copy(moonLight.position); // Copia a posição da luz
+moon.lookAt(0, 0, 0); // Faz a lua olhar para o centro da cena
+// scene.add(moon);
+//Lua//
+
+//Cria luz para a bala
+let bulletLight = false;
+const pointLight = new THREE.PointLight(0xFFFFFF, 0.5);
+
+//Randomiza se o jogo começa de dia ou de noite
+if (Math.floor(Math.random() * 2) === 0){
+    //Adiciona a luz, o 'sol' e muda a cor do céu para dia
+    scene.add(sunLight); 
+    scene.add(sun); // Adiciona o sol à cena
+
+    //Cor da Skybox//
+    scene.background = new THREE.Color(0x87ceeb);
+
+    //Não cria luz para a bala de dia
+    bulletLight = false;
+
+}else{
+    //Adiciona a luz, a 'lua' e muda a cor do céu para noite
+    scene.add(moonLight);
+    scene.add(moon);
+
+    //Cor da Skybox//
+    scene.background = new THREE.Color(0x060660);
+
+    //Cria luz para a bala de noite
+    bulletLight = true;
+}
+
+//Configurar câmera de sombra para o sol
 sunLight.shadow.mapSize.width = 2048;
 sunLight.shadow.mapSize.height = 2048;
 sunLight.shadow.camera.left = -150;
@@ -264,6 +308,17 @@ sunLight.shadow.camera.bottom = -150;
 sunLight.shadow.camera.near = 0.5;
 sunLight.shadow.camera.far = 500;
 sunLight.shadow.bias = -0.0001;
+
+//Configurar câmera de sombra para a lua
+moonLight.shadow.mapSize.width = 2048;
+moonLight.shadow.mapSize.height = 2048;
+moonLight.shadow.camera.left = -150;
+moonLight.shadow.camera.right = 150;
+moonLight.shadow.camera.top = 150;
+moonLight.shadow.camera.bottom = -150;
+moonLight.shadow.camera.near = 0.5;
+moonLight.shadow.camera.far = 500;
+moonLight.shadow.bias = -0.0001;
 
 const geometryCube = new THREE.BoxGeometry(1, 1, 1);
 const materialCube = new THREE.MeshBasicMaterial({color: 0xfcba03});
@@ -316,13 +371,10 @@ ground.rotation.x = Math.PI / 2;
 ground.position.y = -1;
 // console.log(ground.position);
 
-let bulletLight = false;
-const pointLight = new THREE.PointLight(0xFFFFFF, 1);
-
 scene.add(player);
 player.add(camera);
 
-player.userData.health = 300;
+player.userData.health = 5;
 
 scene.add(cube);
 cube.position.z = -2;
@@ -502,7 +554,7 @@ function obstacleSpawn(){
 
     if (obstacleSpawned === true) return;
     
-    for (let i = 0; i < 10; i++){
+    for (let i = 0; i < 15; i++){
 
         //Cria o Mesh do obstáculo
         const obstacle = new THREE.Mesh(
@@ -1064,7 +1116,7 @@ renderer.domElement.addEventListener("click", async () => {
 
 });
 
-document.addEventListener("pointerlockchange", () =>{
+document.addEventListener("pointerlockchange", () => {
 
     if (document.pointerLockElement === renderer.domElement){
         isPointerLock = true;
