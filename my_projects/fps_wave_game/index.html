@@ -19,6 +19,16 @@
             <span>cubeColorRGB: <span id="cube_color_RGB"></span></span>
             <span>bulletLight: <span id="bullet_light"></span></span>
             <span>noClipMode: <span id="no_clip_mode"></span></span>
+            <span>fpsOn: <span id="fps_on"></span></span>
+        </div>
+
+        <div id="debug_ui_instructions" class="hidden background">
+            <p>Rotação do cubo: '<span class="yellow">F4</span>'</p>
+            <p>Cor do cubo: '<span class="yellow">4</span>'</p>
+            <p>Adicionar luz a bala do player: '<span class="yellow">5</span>'</p>
+            <p>Recarregar a página: '<span class="yellow">r</span>'</p>
+            <p>Toggle noClip: '<span class="yellow">n</span>'</p>
+            <p>Mostrar o fps: '<span class="yellow">1</span>'</p>
         </div>
 
         <div id="UI" class="hidden ">
@@ -29,6 +39,8 @@
         <div id="player_UI" class="hidden background">
             <span>Vida:</span> <span style="color: limegreen;" id="player_health"></span>
         </div>
+
+        <span id="fps_UI"></span>
 
     </body>
     <script type="module" src="game.js"></script>

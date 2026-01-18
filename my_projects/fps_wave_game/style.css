@@ -36,6 +36,19 @@ canvas {
     /* z-index: 10; */
 }
 
+#fps_UI {
+    position: absolute;
+
+    top: 10px;
+    left: 10px;
+
+    font-size: 20px;
+
+    color: white;
+
+    /* z-index: 100; */
+}
+
 #debug_ui {
     position: absolute;
     
@@ -68,12 +81,33 @@ canvas {
     width: fit-content;
 }
 
+#debug_ui_instructions {
+    position: absolute;
+    
+    display: flex;
+    flex-direction: column;
+    
+    bottom: 10px;
+    left: 10px;
+    
+    color: white;
+}
+
+#debug_ui_instructions p {
+    margin: 0;
+}
+
 .green{
     color: limegreen;
 }
 
 .red {
     color: red;
+}
+
+.yellow {
+    font-weight: bold;
+    color: yellow;
 }
 
 .bold {

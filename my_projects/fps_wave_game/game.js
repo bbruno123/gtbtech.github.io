@@ -36,8 +36,10 @@ function update(){
     
     const deltaTime = clock.getDelta();
 
-        obstacleSpawn();
-        grassSpawn();
+    fpsShow(deltaTime);
+
+    obstacleSpawn();
+    grassSpawn();
 
     //Verifica se o usuário clico usando o 'isPointerLock'
     if (isPointerLock === true && gameOver === false){
@@ -71,6 +73,8 @@ function update(){
         bullet_light.innerText = bulletLight;
 
         no_clip_mode.innerText = noClip;
+        
+        fpsOnToggle.innerHTML = fpsOn;
 
         //Gerencia as cores do 'true' ou 'false' para 'limegreen' e 'red' respectivamente//
 
@@ -109,6 +113,15 @@ function update(){
             no_clip_mode.classList.add("red");
             no_clip_mode.classList.remove("green");
         }
+
+        //fpsOnToggle//
+        if (fpsOn === true){
+            fpsOnToggle.classList.add("green");
+            fpsOnToggle.classList.remove("red");
+        }else{
+            fpsOnToggle.classList.add("red");
+            fpsOnToggle.classList.remove("green");
+        }
         
         //Inicia o jogo
         startGame = true;
@@ -128,6 +141,7 @@ function update(){
 
         waveUI.innerHTML = `Wave: <span style="color: yellow;">${waveRound}</span>`;
         nextWaveTimerUI.innerHTML = `Próxima Wave em: <span style="color: yellow;">${(nextWaveTimer.toFixed(0))}</span>s`;
+
 
         if (nextWave === true){
             nextWaveTimerUI.classList.remove("hidden");
@@ -165,8 +179,10 @@ function update(){
 }
 
 //Menu de debug//
-const debug_ui = document.querySelector("#debug_ui");
-const coordsElement = document.querySelector("#coords");
+const debug_ui = document.getElementById("debug_ui");
+const debug_ui_instructions = document.getElementById("debug_ui_instructions");
+
+const coordsElement = document.getElementById("coords");
 
 const cube_rotation = document.getElementById("cube_rotation");
 const cube_color_RGB = document.getElementById("cube_color_RGB");
@@ -175,10 +191,15 @@ const bullet_light = document.getElementById("bullet_light");
 
 const no_clip_mode = document.getElementById("no_clip_mode");
 
-//UI
+//Player Status UI
 const playerHealth = document.getElementById("player_health");
 const playerUI = document.getElementById("player_UI");
 
+//Fps UI
+const fpsOnToggle = document.getElementById("fps_on");
+const fpsUI = document.getElementById("fps_UI");
+
+//Wave Status UI
 const UI = document.getElementById("UI");
 const waveUI = document.getElementById("wave");
 const nextWaveTimerUI = document.getElementById("next_wave_timer");
@@ -218,6 +239,46 @@ function UI_(){
 
     }else{
         UI.classList.remove("hidden");
+    }
+}
+
+let frameCount = 0;
+let timePassed = 0;
+
+let fpsOn = false;
+
+function fpsShow(deltaTime){
+
+    //Incrementa os frames em 'frameCount'
+    frameCount++;
+
+    //Atribui o tempo a 'timePassed'
+    timePassed += deltaTime;
+
+    if (timePassed >= 1){
+        
+        //Divide os frames por segungo
+        const fps = frameCount / timePassed;
+
+        //Mostra o fps na tela//
+        fpsUI.innerText = `Fps: ${fps.toFixed(0)}`;
+
+        //Reseta o 'frameCount' e o 'timePassed'
+        frameCount = 0;
+        timePassed = 0;
+    }
+
+    if (fpsOn === true){
+        fpsUI.classList.remove("hidden");
+
+        playerUI.style.marginTop = "40px";
+        debug_ui.style.marginTop = "40px";
+
+    }else{
+        fpsUI.classList.add("hidden");
+
+        debug_ui.style.marginTop = "0px";
+        playerUI.style.marginTop = "0px";
     }
 }
 
@@ -1187,6 +1248,7 @@ window.addEventListener("keydown", (event) => {
     if (event.key === "F3" && event.shiftKey) {
         event.preventDefault();
         debug_ui.classList.toggle("hidden");
+        debug_ui_instructions.classList.toggle("hidden");
     }
 
     //Toggle a rotação do cubo//
@@ -1212,6 +1274,11 @@ window.addEventListener("keydown", (event) => {
     //noClip Mode//
     if (event.key.toLowerCase() === "n" && debugAtivo === true){
         noClip = !noClip;
+    }
+
+    //Toggle o fps//
+    if (event.key === "1" && debugAtivo === true && !event.repeat){
+        fpsOn = !fpsOn;
     }
 
     //WASD
