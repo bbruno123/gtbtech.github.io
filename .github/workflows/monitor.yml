@@ -25,7 +25,7 @@ jobs:
       env:
         ALERT_TO: ryanfabres@gmail.com
         GMAIL_USER: bruno.spams.email@gmail.com
-        GMAIL_APP_PASSWORD: ttdz yzix pklw ngsd
+        GMAIL_APP_PASSWORD: teste
         MONITOR_DB: ./monitor.sqlite3
         MONITOR_LOG: ./monitor.log
       run: |
