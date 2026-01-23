@@ -1,13 +1,13 @@
 name: News Monitor 30s
 on:
   schedule:
-    - cron: '0 * * * *'  # a cada hora
+    - cron: '*/1 * * * *'  # a cada 1 minuto (30s não é possível)
   workflow_dispatch:  # botão manual
 
 jobs:
   monitor:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 2
     steps:
     - uses: actions/checkout@v4
     
@@ -30,7 +30,7 @@ jobs:
         MONITOR_DB: ./monitor.sqlite3
         MONITOR_LOG: ./monitor.log
       run: |
-        END_TIME=$(($(date +%s) + 3600))
+        END_TIME=$(($(date +%s) + 60))
         while [ $(date +%s) -lt $END_TIME ]; do
           echo "===== Executando ciclo ====="
           python3 news_monitor/monitor_universal.py
