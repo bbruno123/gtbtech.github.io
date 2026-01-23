@@ -1,0 +1,15 @@
+pip install -r requirements.txt
+
+.venv\Scripts\activate.bat
+
+cd /workspaces/bbruno123.github.io/news_alert_script && source .venv/bin/activate && export ALERT_TO="ryanfabres@gmail.com" && export GMAIL_USER="bruno.spams.email@gmail.com" && export GMAIL_APP_PASSWORD="ttdz yzix pklw ngsd" && export MONITOR_DB="$PWD/monitor.sqlite3" && export MONITOR_LOG="$PWD/monitor.log" && python3 news_monitor/monitor_universal.py >> cron.log 2>&1
+
+
+*/1 * * * * cd /workspaces/bbruno123.github.io/news_alert_script && source .venv/bin/activate && export ALERT_TO=ryanfabres@gmail.com && export GMAIL_USER=bruno.spams.email@gmail.com && export GMAIL_APP_PASSWORD=ttdz\ yzix\ pklw\ ngsd && export MONITOR_DB=$PWD/monitor.sqlite3 && export MONITOR_LOG=$PWD/monitor.log && python3 news_monitor/monitor_universal.py >> cron.log 2>&1
+
+Teste:
+*/1 * * * * cd /workspaces/bbruno123.github.io/news_alert_script && source .venv/bin/activate && export ALERT_TO=teste && export GMAIL_USER=teste && export GMAIL_APP_PASSWORD=teste && export MONITOR_DB=$PWD/monitor.sqlite3 && export MONITOR_LOG=$PWD/monitor.log && python3 news_monitor/monitor_universal.py >> cron.log 2>&1
+
+
+python news_monitor\monitor_universal.py
+

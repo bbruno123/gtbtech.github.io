@@ -1,0 +1,55 @@
+2026-01-22 10:46:59,502 INFO ===== ciclo iniciado =====
+2026-01-22 10:46:59,503 INFO Timezone: America/Sao_Paulo | verificado em: 2026-01-22T10:46:59.486502-03:00
+2026-01-22 10:47:02,306 INFO [Melhores Destinos] analisados=10 nao_hoje=10 sem_data=0 notificados=0
+2026-01-22 10:47:03,360 INFO [Passageiro de Primeira] analisados=30 nao_hoje=24 sem_data=0 notificados=0
+2026-01-22 10:47:03,361 INFO RESUMO: analisados=40 nao_hoje=34 sem_data=0 notificados=0
+2026-01-22 10:47:03,361 INFO ===== ciclo finalizado =====
+2026-01-22 10:49:13,004 INFO ===== ciclo iniciado =====
+2026-01-22 10:49:13,004 INFO Timezone: America/Sao_Paulo | verificado em: 2026-01-22T10:49:13.003277-03:00
+2026-01-22 10:49:14,834 INFO [Melhores Destinos] analisados=10 nao_hoje=10 sem_data=0 notificados=0
+2026-01-22 10:49:18,608 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/smiles-oferece-passagens-aereas-a-partir-de-7-500-milhas-taxas-por-trecho/
+2026-01-22 10:49:18,608 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/prorrogado-azul-fidelidade-oferece-ate-350-de-bonus-na-compra-de-pontos-2/
+2026-01-22 10:49:18,609 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/viajantes-com-ingressos-para-a-copa-do-mundo-terao-prioridade-no-agendamento-da-entrevista-do-visto-americano/
+2026-01-22 10:49:18,609 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/air-europa-oferece-voos-de-ida-e-volta-a-partir-de-r-3-251/
+2026-01-22 10:49:18,609 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/corre-mercado-livre-oferece-cupom-de-ate-r-200-off-em-compras-4/
+2026-01-22 10:49:18,609 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/ultimo-dia-para-liberar-os-pontos-da-promocao-bateu-ganhou-do-santander/
+2026-01-22 10:49:18,609 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/chegou-a-expomilhas-by-pp-garanta-ja-o-seu-ingresso/
+2026-01-22 10:49:18,610 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/voe-para-miami-a-partir-de-r-967-ou-34-mil-milhas-latam-pass-taxas-por-trecho/
+2026-01-22 10:49:18,610 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/aeroporto-do-recife-recebe-investimento-de-r-60-milhoes-para-reformas-no-terminal-intermodal/
+2026-01-22 10:49:18,610 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/50-anos-de-concorde-air-france-volta-no-tempo-e-relembra-operacoes-com-jato-supersonico/
+2026-01-22 10:49:18,610 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/volta-as-aulas-material-escolar-com-ate-40-de-desconto-no-mercado-livre/
+2026-01-22 10:49:18,611 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/aviacao-brasileira-registra-melhor-ano-da-historia-em-2025/
+2026-01-22 10:49:18,611 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/carnaval-em-ouro-preto-hospedagens-a-partir-de-r-427-8-off-com-nosso-cupom-exclusivo-da-hoteis-com/
+2026-01-22 10:49:18,611 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/guia-salas-vip-guarulhos/
+2026-01-22 10:49:18,611 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/aproveite-este-verao-e-ainda-acumule-pontos-esfera/
+2026-01-22 10:49:18,611 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/roda-rico-promove-acao-solidaria-e-brincadeiras-ao-ar-livre-durante-o-aniversario-de-sao-paulo/
+2026-01-22 10:49:18,612 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/esfera-oferece-ate-5-pontos-por-real-gasto-no-extra-10/
+2026-01-22 10:49:18,612 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/livelo-oferece-ate-54-de-desconto-na-compra-de-pontos-9/
+2026-01-22 10:49:18,612 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/azul-suspendera-voos-de-curitiba-para-assuncao-e-montevideu-a-partir-de-marco-de-2026/
+2026-01-22 10:49:18,612 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/voe-para-los-angeles-a-partir-de-r-1-045-ou-37-mil-milhas-latam-pass-taxas-por-trecho/
+2026-01-22 10:49:18,612 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/itens-variados-com-ate-58-de-desconto-na-amazon-4/
+2026-01-22 10:49:18,613 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/ate-amanha-ganhe-ate-10-pontos-livelo-por-real-no-seguro-viagem-da-hero-2/
+2026-01-22 10:49:18,613 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/bradesco-principal-valet-gratuito-iguatemi-amex/
+2026-01-22 10:49:18,613 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/anac-vai-revisar-regras-sobre-direitos-e-deveres-dos-passageiros/
+2026-01-22 10:49:18,613 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/volta-as-aulas-da-udm-aproveite-40-off-no-mundo-avios-dominando-o-seats-aero-e-mais/
+2026-01-22 10:49:18,613 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/festival-de-pontos-livelo-ganhe-ate-12-pontos-por-real-gasto-na-elbo-riachuelo-ca-e-outros-parceiros/
+2026-01-22 10:49:18,614 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/melhor-forma-de-comprar-iphone/
+2026-01-22 10:49:18,614 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/qantas-anuncia-aumento-nos-resgates-com-a-emirates-e-limita-primeira-classe-a-clientes-com-status/
+2026-01-22 10:49:18,614 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/transfira-pontos-livelo-para-o-azul-fidelidade-usando-pontos-dinheiro-milheiro-a-partir-de-r-1251/
+2026-01-22 10:49:18,615 INFO [Passageiro de Primeira (RSS)] sem data confiável (RSS) -> https://passageirodeprimeira.com/lufthansa-voo-inaugural-boeing-787-9-pintura-100-anos-rio/
+2026-01-22 10:49:18,615 INFO [Passageiro de Primeira] analisados=30 nao_hoje=0 sem_data=30 notificados=0
+2026-01-22 10:49:18,616 INFO RESUMO: analisados=40 nao_hoje=10 sem_data=30 notificados=0
+2026-01-22 10:49:18,616 INFO ===== ciclo finalizado =====
+2026-01-23 09:59:04,172 INFO ===== ciclo iniciado =====
+2026-01-23 09:59:04,173 INFO Timezone: America/Sao_Paulo | verificado em: 2026-01-23T09:59:04.164095-03:00
+2026-01-23 09:59:06,725 INFO [Melhores Destinos] analisados=10 nao_hoje=10 sem_data=0 notificados=0
+2026-01-23 09:59:11,996 INFO [Passageiro de Primeira (RSS)] NOTIFICADO: Turkish Airlines tem voos de ida e volta para destinos internacionais a partir de US$ 999 -> https://passageirodeprimeira.com/turkish-airlines-tem-voos-de-ida-e-volta-para-destinos-internacionais-a-partir-de-us-999/
+2026-01-23 09:59:12,000 INFO [Passageiro de Primeira] analisados=30 nao_hoje=26 sem_data=0 notificados=1
+2026-01-23 09:59:12,000 INFO RESUMO: analisados=40 nao_hoje=36 sem_data=0 notificados=1
+2026-01-23 09:59:12,000 INFO ===== ciclo finalizado =====
+2026-01-23 13:32:39,104 INFO ===== ciclo iniciado =====
+2026-01-23 13:32:39,104 INFO Timezone: America/Sao_Paulo | verificado em: 2026-01-23T10:32:39.102914-03:00
+2026-01-23 13:32:41,701 INFO [Melhores Destinos] analisados=10 nao_hoje=10 sem_data=0 notificados=0
+2026-01-23 13:32:42,384 INFO [Passageiro de Primeira] analisados=30 nao_hoje=25 sem_data=0 notificados=0
+2026-01-23 13:32:42,384 INFO RESUMO: analisados=40 nao_hoje=35 sem_data=0 notificados=0
+2026-01-23 13:32:42,385 INFO ===== ciclo finalizado =====
