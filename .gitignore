@@ -1,2 +1,10 @@
 # Local secrets
 news_alert_script/.env
+
+# Test databases and logs
+news_alert_script/monitor_test*.sqlite3
+news_alert_script/monitor_test*.log
+
+# Python cache
+__pycache__/
+*.pyc
