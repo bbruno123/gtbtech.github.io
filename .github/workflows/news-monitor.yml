@@ -2,14 +2,9 @@ name: News Monitor
 
 on:
   schedule:
-    # Executa a cada 5 minutos
-    - cron: "*/5 * * * *"
+    # Executa a cada hora (mais confiável que a cada 5 min)
+    - cron: "0 * * * *"
   workflow_dispatch: {}
-  push:
-    branches:
-      - main
-    paths:
-      - '.github/workflows/news-monitor.yml'
 
 concurrency:
   group: news-monitor
@@ -18,6 +13,7 @@ concurrency:
 jobs:
   monitor:
     runs-on: ubuntu-latest
+    timeout-minutes: 65
     permissions:
       contents: write
     steps:
@@ -34,7 +30,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r news_alert_script/news_monitor/requirements.txt
 
-      - name: Run monitor script
+      - name: Run monitor script in loop (12x com 5 min de intervalo = 1 hora)
         env:
           ALERT_TO: ${{ secrets.ALERT_TO }}
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
@@ -42,7 +38,15 @@ jobs:
           MONITOR_DB: ${{ github.workspace }}/news_alert_script/monitor.sqlite3
           MONITOR_LOG: ${{ github.workspace }}/news_alert_script/monitor.log
         run: |
-          python news_alert_script/news_monitor/monitor_universal.py
+          for i in {1..12}; do
+            echo "===== Execução $i de 12 - $(date) ====="
+            python news_alert_script/news_monitor/monitor_universal.py || true
+            echo "===== Finalizado - $(date) ====="
+            if [ $i -lt 12 ]; then
+              echo "Aguardando 5 minutos..."
+              sleep 300
+            fi
+          done
 
       - name: Commit DB back to repo (for state persistence)
         run: |
