@@ -2,7 +2,7 @@ name: News Monitor
 
 on:
   schedule:
-    # Executa a cada hora (mais confiável que a cada 5 min)
+    # Backup: dispara a cada hora caso o job anterior termine
     - cron: "0 * * * *"
   workflow_dispatch: {}
 
@@ -13,7 +13,7 @@ concurrency:
 jobs:
   monitor:
     runs-on: ubuntu-latest
-    timeout-minutes: 65
+    timeout-minutes: 350  # ~5.8 horas (limite do GitHub é 6h)
     permissions:
       contents: write
     steps:
@@ -30,7 +30,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r news_alert_script/news_monitor/requirements.txt
 
-      - name: Run monitor script in loop (12x com 5 min de intervalo = 1 hora)
+      - name: Run monitor script continuously (1 hora de intervalo, ~5.5 horas total)
         env:
           ALERT_TO: ${{ secrets.ALERT_TO }}
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
@@ -38,13 +38,18 @@ jobs:
           MONITOR_DB: ${{ github.workspace }}/news_alert_script/monitor.sqlite3
           MONITOR_LOG: ${{ github.workspace }}/news_alert_script/monitor.log
         run: |
-          for i in {1..12}; do
-            echo "===== Execução $i de 12 - $(date) ====="
+          # Roda por ~5.5 horas (5 execuções com 1h de intervalo)
+          # Depois o schedule dispara outro job automaticamente
+          for i in {1..5}; do
+            echo ""
+            echo "=========================================="
+            echo "===== Execução $i de 5 - $(date) ====="
+            echo "=========================================="
             python news_alert_script/news_monitor/monitor_universal.py || true
             echo "===== Finalizado - $(date) ====="
-            if [ $i -lt 12 ]; then
-              echo "Aguardando 5 minutos..."
-              sleep 300
+            if [ $i -lt 5 ]; then
+              echo "Aguardando 1 hora para próxima execução..."
+              sleep 3600
             fi
           done
 
