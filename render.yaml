@@ -1,0 +1,19 @@
+services:
+  - type: cron
+    name: news-monitor
+    env: python
+    repo: https://github.com/bbruno123/gtbtech.github.io
+    schedule: "0 * * * *"  # Roda de hora em hora
+    buildCommand: "pip install -r news_alert_script/news_monitor/requirements.txt"
+    startCommand: "cd news_alert_script && python render_monitor.py"
+    envVars:
+      - key: ALERT_TO
+        sync: false
+      - key: GMAIL_USER
+        sync: false
+      - key: GMAIL_APP_PASSWORD
+        sync: false
+      - key: MONITOR_DB
+        value: /opt/render/project/src/news_alert_script/monitor.sqlite3
+      - key: MONITOR_LOG
+        value: /opt/render/project/src/news_alert_script/monitor.log
