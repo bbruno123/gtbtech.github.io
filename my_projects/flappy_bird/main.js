@@ -6,26 +6,45 @@ let freeMove = false;
 let birdBoost = 0;
 let canJump = true;
 
+let isGravity = true;
+
+// Delta Time variables
 let lastTimestamp = 0;
+let deltaTimeMs = 0;
+let deltaTimeSec = 0;
 
 function update(timestamp) {
     // Request the next frame
     requestAnimationFrame(update);
 
-    // Calculate delta time in milliseconds (timestamp is in ms)
-    const deltaTimeMs = timestamp - lastTimestamp;
+    // Skip first frame (lastTimestamp is 0)
+    if (lastTimestamp === 0) {
+        lastTimestamp = timestamp;
+        return;
+    }
+
+    // Calculate delta time in milliseconds
+    deltaTimeMs = timestamp - lastTimestamp;
+    
+    // Convert to seconds for physics calculations
+    deltaTimeSec = deltaTimeMs / 1000;
 
     // Store the current timestamp for the next frame
     lastTimestamp = timestamp;
 
-    // OPTIONAL: Convert to seconds for easier physics calculations (e.g., speed * delta)
-    const deltaTimeSec = deltaTimeMs / 1000;
+    // Cap deltaTime to prevent huge jumps (e.g., when tab is inactive)
+    if (deltaTimeSec > 0.1) deltaTimeSec = 0.1;
 
-    //gravity();
+    
+    if (!isGameOver){
+        
+        if(isGravity){
+            gravity();
+        }
+    
+        groundRoofCollision();
+    }
 }
-
-// Start the loop
-requestAnimationFrame(update);
 
 window.addEventListener("keydown", (event) => {
 
@@ -52,35 +71,57 @@ window.addEventListener("keydown", (event) => {
 
         if(event.key.toLocaleLowerCase() === " " && !event.repeat){
             
-            if(canJump){
-                timer();
+            if (!isGameOver){
+                jump();
             }
         }
     }
     
 });
 
-function timer(){
+function jump(){
 
-    let timerBoost = 10;
-    canJump = false;
+    let jumpBoost = 15;
+    isGravity = false;
 
-    for (let i = 0; i < timerBoost; i++) {
-        
+    for (let i = 0; i <= jumpBoost; i++){
+
         setTimeout(function() {
+            
             const currentTop = parseFloat(getComputedStyle(bird).top) || 0;
             bird.style.top = (currentTop - (i + 1)) + "px";
-            if (i === timerBoost - 1) {
-                canJump = true;
+            
+            if (i === jumpBoost){
+                // Espera 0.1 segundos após o pulo terminar para reativar gravidade
+                setTimeout(function() {
+                    isGravity = true;
+                }, 100);
             }
-        }, 15 * i);
+        }, 7 * i);
     }
 }
 
-let gravityForce = 0;
+let gravityForce = 300; // pixels por segundo
 
 function gravity(){
+    bird.style.top = ((parseFloat(getComputedStyle(bird).top) || 0) +gravityForce * deltaTimeSec) + "px";
+}
 
+const pageHeight = window.innerHeight;
+
+let isGameOver = false;
+
+function groundRoofCollision(){
+    const birdPosition = parseFloat(getComputedStyle(bird).top) || 0;
+
+    if (birdPosition > pageHeight){
+        isGameOver = true;
+
+    }else if (birdPosition < 0){
+        isGameOver = true;
+    }
+
+    console.log(birdPosition);
 }
 
 update();
@@ -105,4 +146,5 @@ update();
 
 let string = "5";
 
-console.log(parseFloat(getComputedStyle(bird).top));
+console.log(parseFloat(pageHeight));
+
