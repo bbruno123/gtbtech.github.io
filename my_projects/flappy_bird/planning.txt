@@ -1,0 +1,52 @@
+Flappy Bird:
+
+Requsitos:
+- O jogo precisa se adaptar a qualquer tela;
+- O bird tem que cair;
+- O bird precisa pular com um impluso;
+- Os tubos precisam ter uma abertura no meio e de tamanhos diferentes;
+
+
+Ui{
+- Score;
+- BestScore (msotrar após a primeira morte);
+
+    Design{
+    - Background;
+    - Bird;
+    - Pipe;
+    }
+}
+
+Lógica{
+
+    - Camera(
+        A camera sempre segue o bird;
+    )
+
+    - Bird(
+        O bird sempre move para direita no '+left';
+    )
+
+    - Gravidade(
+        O bird sempre tem uma força o puxando para baixo no '+top';
+    )
+    
+    - Pular(
+        Ao apertar 'Space' o bird o bird recebe um impulso gradual no '-top'
+    )
+
+    - Canos{
+        Os canos spawnam na parte direita fora da tela, asim que os canos sairem da tela eles são apagados; 
+    }
+}
+
+Ao iniciar:
+- Apertar 'Space' para começar;
+
+Game Over:
+- Apertar 'Space' para recomeçar;
+
+Movimentação:
+- 
+

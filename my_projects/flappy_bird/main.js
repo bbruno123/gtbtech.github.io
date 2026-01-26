@@ -50,7 +50,7 @@ window.addEventListener("keydown", (event) => {
 
     }else{
 
-        if(event.key.toLocaleLowerCase() === "w" && !event.repeat){
+        if(event.key.toLocaleLowerCase() === " " && !event.repeat){
             
             if(canJump){
                 timer();
@@ -62,7 +62,7 @@ window.addEventListener("keydown", (event) => {
 
 function timer(){
 
-    let timerBoost = 20;
+    let timerBoost = 10;
     canJump = false;
 
     for (let i = 0; i < timerBoost; i++) {
@@ -81,19 +81,6 @@ let gravityForce = 0;
 
 function gravity(){
 
-    let timerBoost = 150;
-    canJump = false;
-
-    for (let i = 0; i < timerBoost; i++) {
-        
-        setTimeout(function() {
-            const currentTop = parseFloat(getComputedStyle(bird).top) || 0;
-            bird.style.top = (currentTop + (i + 1)) + "px";
-            if (i === timerBoost - 1) {
-                canJump = true;
-            }
-        }, 15 * i);
-    }
 }
 
 update();
