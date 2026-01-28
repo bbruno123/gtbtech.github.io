@@ -71,6 +71,7 @@ function update(timestamp) {
         groundRoofCollision();
     }
     groundMovement();
+    birdPipeCollision();
 }
 
 window.addEventListener("keydown", (event) => {
@@ -174,6 +175,24 @@ function groundMovement(){
     }else{
         background_bottom.style.left = ((parseFloat(getComputedStyle(background_bottom).left) || 0) -groundSpeed * deltaTimeSec) + "px";
     }
+}
+
+function birdPipeCollision(){
+    // const birdPositionTop = parseFloat(getComputedStyle(bird).top) || 0;
+    // const birdPositionRight = parseFloat(getComputedStyle(bird).right) || 0;
+
+    // //Pega o 'left' e 'bottom' do 'pipe_top'
+    // let leftPipeTop = pipe_top.getBoundingClientRect().left;
+    // let bottomPipeTop = pipe_top.getBoundingClientRect().bottom;
+
+    // //Pega o 'left' e 'top' do 'pipe_bottom'
+    // let leftPipeBottom = pipe_bottom.getBoundingClientRect().left;
+    // let topPipeBottom = pipe_bottom.getBoundingClientRect().top;
+
+    // if (birdPositionTop < bottomPipeTop && birdPositionRight > leftPipeTop){
+    //     console.log("oi");
+    }
+
 }
 
 update();
