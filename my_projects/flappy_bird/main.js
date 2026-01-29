@@ -12,17 +12,17 @@ const pipe_bottom = document.getElementById("pipe_bottom");
 pipes.style.gap = (Math.floor(Math.random() * (185 - 145 + 1)) + 145).toString() + "%"; //Mexe no gap dos 'pipes' entre 145% e 185%
 pipes.style.top = (Math.floor(Math.random() * (41)) - 50).toString() + "%"; //Mexe no top dos 'pipes' entre -10% e -50%
 
-//Pega o 'left' e 'bottom' do 'pipe_top'
-let leftPipeTop = pipe_top.getBoundingClientRect().left;
-let bottomPipeTop = pipe_top.getBoundingClientRect().bottom;
+// //Pega o 'left' e 'bottom' do 'pipe_top'
+// let leftPipeTop = pipe_top.getBoundingClientRect().left;
+// let bottomPipeTop = pipe_top.getBoundingClientRect().bottom;
 
-//Pega o 'left' e 'top' do 'pipe_bottom'
-let leftPipeBottom = pipe_bottom.getBoundingClientRect().left;
-let topPipeBottom = pipe_bottom.getBoundingClientRect().top;
+// //Pega o 'left' e 'top' do 'pipe_bottom'
+// let leftPipeBottom = pipe_bottom.getBoundingClientRect().left;
+// let topPipeBottom = pipe_bottom.getBoundingClientRect().top;
 
 //Printa as posições dos 'pipes' 
-console.log(`pipe_top: left: ${leftPipeTop}, bottom: ${bottomPipeTop}`);
-console.log(`pipe_bottom: left: ${leftPipeBottom}, top: ${topPipeBottom}`);
+// console.log(`pipe_top: left: ${leftPipeTop}, bottom: ${bottomPipeTop}`);
+// console.log(`pipe_bottom: left: ${leftPipeBottom}, top: ${topPipeBottom}`);
 
 let birdSpeed = 5;
 let freeMove = true;
@@ -178,44 +178,60 @@ function groundMovement(){
 }
 
 function birdPipeCollision(){
-    // const birdPositionTop = parseFloat(getComputedStyle(bird).top) || 0;
-    // const birdPositionRight = parseFloat(getComputedStyle(bird).right) || 0;
+    
+    //Bird:
+    const birdPositionTop = bird.getBoundingClientRect().top; //Top
+    const birdPositionRight = bird.getBoundingClientRect().right; //Right
+    const birdPositionLeft = bird.getBoundingClientRect().left; //Left
+    const birdPositionBottom = bird.getBoundingClientRect().bottom; //Bottom
+    
+    //PIPE_TOP:
+    const leftPipeTop = pipe_top.getBoundingClientRect().left; //Left
+    const bottomPipeTop = pipe_top.getBoundingClientRect().bottom; //Bottom
+    const rightPipeTop = pipe_top.getBoundingClientRect().right; //Right
 
-    // //Pega o 'left' e 'bottom' do 'pipe_top'
-    // let leftPipeTop = pipe_top.getBoundingClientRect().left;
-    // let bottomPipeTop = pipe_top.getBoundingClientRect().bottom;
+    //PIPE_BOTTOM:
+    const leftPipeBottom = pipe_bottom.getBoundingClientRect().left; //Left
+    const topPipeBottom = pipe_bottom.getBoundingClientRect().top; //Bottom
+    const rightPipeBottom = pipe_bottom.getBoundingClientRect().right; //Right
 
-    // //Pega o 'left' e 'top' do 'pipe_bottom'
-    // let leftPipeBottom = pipe_bottom.getBoundingClientRect().left;
-    // let topPipeBottom = pipe_bottom.getBoundingClientRect().top;
+    //Colisão com o pipe de cima: overlap horizontal + parte superior do pássaro acima do fundo do pipe
+    if(birdPositionRight > leftPipeTop && birdPositionTop < bottomPipeTop && birdPositionLeft < rightPipeTop){
+        console.log("pipe_top");
+    }
 
-    // if (birdPositionTop < bottomPipeTop && birdPositionRight > leftPipeTop){
-    //     console.log("oi");
-    // }
+    //Colisão com o pipe de baixo: overlap horizontal + parte inferior do pássaro abaixo do topo do pipe
+    if (birdPositionRight > leftPipeBottom && birdPositionLeft < rightPipeBottom && birdPositionBottom > topPipeBottom) {
+        console.log("pipe_bottom");
+    }
 
 }
 
+// Debug: single shared interval to log positions every 500ms.
+const DEBUG_INTERVAL_MS = 500;
+let debugTimerId = null;
+function startDebugInterval() {
+    if (debugTimerId !== null) return; // already running
+    debugTimerId = setInterval(() => {
+        // stop logging when the game is over
+        if (isGameOver) {
+            clearInterval(debugTimerId);
+            debugTimerId = null;
+            return;
+        }
+
+        const birdPositionTop = bird.getBoundingClientRect().top;
+        const birdPositionRight = bird.getBoundingClientRect().right;
+        const birdPositionLeft = bird.getBoundingClientRect().left;
+
+        const leftPipeTop = pipe_top.getBoundingClientRect().left;
+        const bottomPipeTop = pipe_top.getBoundingClientRect().bottom;
+        const rightPipeTop = pipe_top.getBoundingClientRect().right;
+
+        console.clear();
+        console.log(`bird_top: ${birdPositionTop} | bird_left: ${birdPositionLeft} | bird_right: ${birdPositionRight}\npipe_right: ${rightPipeTop} | pipe_left: ${leftPipeTop} | pipe_bottom: ${bottomPipeTop}`);
+    }, DEBUG_INTERVAL_MS);
+}
+startDebugInterval();
+
 update();
-// let frase = "5Eu gosto 1de 4 nadar";
-// let string = "";
-// let stringNums = "";
-
-// frase = frase.split('');
-
-// for (let i = 0; i < frase.length; i++){
-
-//     if(!isNaN(frase[i])){
-//         stringNums += frase[i];
-
-//     }else{
-//         string += frase[i];
-//     }
-// }
-
-// console.log(string);
-// console.log(stringNums);]
-
-let string = "5";
-
-// console.log(parseFloat("0") + "px");
-
