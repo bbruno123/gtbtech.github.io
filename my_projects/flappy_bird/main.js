@@ -7,22 +7,8 @@ const pipes = document.getElementById("pipes");
 const pipe_top = document.getElementById("pipe_top");
 const pipe_bottom = document.getElementById("pipe_bottom");
 
-// let i = parseFloat(getComputedStyle(pipe_top).top) || 0;
-
 pipes.style.gap = (Math.floor(Math.random() * (185 - 145 + 1)) + 145).toString() + "%"; //Mexe no gap dos 'pipes' entre 145% e 185%
 pipes.style.top = (Math.floor(Math.random() * (41)) - 50).toString() + "%"; //Mexe no top dos 'pipes' entre -10% e -50%
-
-// //Pega o 'left' e 'bottom' do 'pipe_top'
-// let leftPipeTop = pipe_top.getBoundingClientRect().left;
-// let bottomPipeTop = pipe_top.getBoundingClientRect().bottom;
-
-// //Pega o 'left' e 'top' do 'pipe_bottom'
-// let leftPipeBottom = pipe_bottom.getBoundingClientRect().left;
-// let topPipeBottom = pipe_bottom.getBoundingClientRect().top;
-
-//Printa as posições dos 'pipes' 
-// console.log(`pipe_top: left: ${leftPipeTop}, bottom: ${bottomPipeTop}`);
-// console.log(`pipe_bottom: left: ${leftPipeBottom}, top: ${topPipeBottom}`);
 
 let birdSpeed = 5;
 let freeMove = true;
