@@ -1,4 +1,6 @@
 {
-    "python-envs.defaultEnvManager": "ms-python.python:system",
-    "python-envs.pythonProjects": []
+  "liveServer.settings.host": "0.0.0.0",
+  "liveServer.settings.useLocalIp": true,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.port": 5500
 }
