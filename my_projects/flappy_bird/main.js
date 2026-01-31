@@ -11,7 +11,7 @@ pipes.style.gap = (Math.floor(Math.random() * (185 - 145 + 1)) + 145).toString()
 pipes.style.top = (Math.floor(Math.random() * (41)) - 50).toString() + "%"; //Mexe no top dos 'pipes' entre -10% e -50%
 
 let birdSpeed = 5;
-let freeMove = true;
+let freeMove = false;
 
 let birdBoost = 0;
 // let canJump = true;
@@ -57,6 +57,7 @@ function update(timestamp) {
         groundRoofCollision();
     }
     groundMovement();
+    pipeMove();
     birdPipeCollision();
 }
 
@@ -102,7 +103,7 @@ window.addEventListener("keydown", (event) => {
 
 function jump(){
 
-    let jumpBoost = 10;
+    let jumpBoost = 7;
     isGravity = false;
 
     for (let i = 0; i <= jumpBoost; i++){
@@ -118,7 +119,7 @@ function jump(){
                     isGravity = true;
                 }, 100);
             }
-        }, 7 * i);
+        }, 4 * i);
     }
 }
 
@@ -191,6 +192,12 @@ function birdPipeCollision(){
         console.log("pipe_bottom");
     }
 
+}
+
+let pipeSpeed = 25;
+
+function pipeMove(){
+    pipes.style.left = ((parseFloat(getComputedStyle(pipes).left) || 0) -pipeSpeed * deltaTimeSec) + "px";
 }
 
 // Debug: single shared interval to log positions every 500ms.
