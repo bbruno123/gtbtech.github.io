@@ -28,6 +28,9 @@ let lastTimestamp = 0;
 let deltaTimeMs = 0;
 let deltaTimeSec = 0;
 
+// let spawnTimer = 0;
+// const spawnInterval = 1.5; // segundos
+
 function update(timestamp) {
     // Request the next frame
     requestAnimationFrame(update);
@@ -50,7 +53,10 @@ function update(timestamp) {
     // Cap deltaTime to prevent huge jumps (e.g., when tab is inactive)
     if (deltaTimeSec > 0.1) deltaTimeSec = 0.1;
 
-    
+    // if (spawnTimer >= spawnInterval) {
+    //     spawnTimer = 0;
+    // }
+
     if (!isGameOver){
         
         if(isGravity){
@@ -62,11 +68,11 @@ function update(timestamp) {
         groundRoofCollision();
     }
     groundMovement();
-    // pipeMove();
+    pipeMove();
     birdPipeCollision();
 }
 
-for (let i = 1; i <= 5; i ++){
+for (let i = 1; i < 5; i++){
    
     const pipesClone = pipe.cloneNode(true);
     pipesClone.id = `pipe${i}`;
@@ -74,9 +80,11 @@ for (let i = 1; i <= 5; i ++){
     pipesClone.style.gap = (Math.floor(Math.random() * (185 - 145 + 1)) + 145).toString() + "%"; //Mexe no gap dos 'pipe' entre 145% e 185%
     pipesClone.style.top = (Math.floor(Math.random() * (41)) - 50).toString() + "%"; //Mexe no top dos 'pipe' entre -10% e -50%
     
+    //Gap entre os 'pipe'
     pipesClone.style.left = `${150 * i}px`;
     
     pipes.appendChild(pipesClone);
+    
     console.log(i);
 
     // if (i > 3) i = 0;
@@ -218,7 +226,7 @@ function birdPipeCollision(){
 let pipeSpeed = 25;
 
 function pipeMove(){
-    pipe.style.left = ((parseFloat(getComputedStyle(pipe).left) || 0) -pipeSpeed * deltaTimeSec) + "px";
+    pipes.style.left = ((parseFloat(getComputedStyle(pipe).left) || 0) -pipeSpeed * deltaTimeSec) + "px";
 }
 
 // Debug: single shared interval to log positions every 500ms.
