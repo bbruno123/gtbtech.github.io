@@ -73,9 +73,11 @@ html, body {
 }
 
 #pipes {
-    /* position: absolute; */
+    position: absolute;
     display: flex;
     gap: 60px;
+
+    left: 650px;
 }
 
 #pipe {

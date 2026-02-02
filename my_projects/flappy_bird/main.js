@@ -28,6 +28,9 @@ let lastTimestamp = 0;
 let deltaTimeMs = 0;
 let deltaTimeSec = 0;
 
+let i = 0;
+let pipeQtd = 5;
+
 // let spawnTimer = 0;
 // const spawnInterval = 1.5; // segundos
 
@@ -68,24 +71,48 @@ function update(timestamp) {
         groundRoofCollision();
     }
     groundMovement();
+    pipeSpawn();
     pipeMove();
     birdPipeCollision();
 }
 
+let pipeRollBack = false;
+
+function pipeSpawn(){
+
+    if (i < pipeQtd){
+        
+        const pipesClone = pipe.cloneNode(true);
+        pipesClone.id = `pipe${i}`;
+        
+        pipesClone.style.gap = (Math.floor(Math.random() * (185 - 145 + 1)) + 145).toString() + "%"; //Mexe no gap dos 'pipe' entre 145% e 185%
+        pipesClone.style.top = (Math.floor(Math.random() * (41)) - 50).toString() + "%"; //Mexe no top dos 'pipe' entre -10% e -50%
+        
+        //Gap entre os 'pipe'
+        pipesClone.style.left = `${150 * i}px`;
+        pipes.appendChild(pipesClone);
+        console.log(i);
+
+        i++;
+    }
+    
+    
+}
+
 for (let i = 1; i < 5; i++){
    
-    const pipesClone = pipe.cloneNode(true);
-    pipesClone.id = `pipe${i}`;
+    // const pipesClone = pipe.cloneNode(true);
+    // pipesClone.id = `pipe${i}`;
     
-    pipesClone.style.gap = (Math.floor(Math.random() * (185 - 145 + 1)) + 145).toString() + "%"; //Mexe no gap dos 'pipe' entre 145% e 185%
-    pipesClone.style.top = (Math.floor(Math.random() * (41)) - 50).toString() + "%"; //Mexe no top dos 'pipe' entre -10% e -50%
+    // pipesClone.style.gap = (Math.floor(Math.random() * (185 - 145 + 1)) + 145).toString() + "%"; //Mexe no gap dos 'pipe' entre 145% e 185%
+    // pipesClone.style.top = (Math.floor(Math.random() * (41)) - 50).toString() + "%"; //Mexe no top dos 'pipe' entre -10% e -50%
     
-    //Gap entre os 'pipe'
-    pipesClone.style.left = `${150 * i}px`;
+    // //Gap entre os 'pipe'
+    // pipesClone.style.left = `${150 * i}px`;
     
-    pipes.appendChild(pipesClone);
+    // pipes.appendChild(pipesClone);
     
-    console.log(i);
+    // console.log(i);
 
     // if (i > 3) i = 0;
 }
@@ -226,7 +253,15 @@ function birdPipeCollision(){
 let pipeSpeed = 25;
 
 function pipeMove(){
-    pipes.style.left = ((parseFloat(getComputedStyle(pipe).left) || 0) -pipeSpeed * deltaTimeSec) + "px";
+    const pipesXPosition = (parseFloat(getComputedStyle(pipes).left) || 0);
+    console.log(pipesXPosition);
+    
+    if (pipesXPosition < -50){
+        pipes.style.left = parseFloat("650") + "px";
+    }else {
+        pipes.style.left = ((parseFloat(getComputedStyle(pipes).left) || 0) -pipeSpeed * deltaTimeSec) + "px";
+        pipeRollBack = !pipeRollBack;
+    }
 }
 
 // Debug: single shared interval to log positions every 500ms.
@@ -254,6 +289,6 @@ function startDebugInterval() {
         console.log(`bird_top: ${birdPositionTop} | bird_left: ${birdPositionLeft} | bird_right: ${birdPositionRight}\npipe_right: ${rightPipeTop} | pipe_left: ${leftPipeTop} | pipe_bottom: ${bottomPipeTop}`);
     }, DEBUG_INTERVAL_MS);
 }
-startDebugInterval();
+// startDebugInterval();
 
 update();
