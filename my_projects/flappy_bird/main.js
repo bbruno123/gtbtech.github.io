@@ -3,12 +3,17 @@ const bird = document.getElementById("bird");
 const background_bottom = document.getElementById("background_bottom");
 const background_top = document.getElementById("background_top");
 
-const pipes = document.getElementById("pipes");
+const pipe = document.getElementById("pipe");
 const pipe_top = document.getElementById("pipe_top");
 const pipe_bottom = document.getElementById("pipe_bottom");
 
-pipes.style.gap = (Math.floor(Math.random() * (185 - 145 + 1)) + 145).toString() + "%"; //Mexe no gap dos 'pipes' entre 145% e 185%
-pipes.style.top = (Math.floor(Math.random() * (41)) - 50).toString() + "%"; //Mexe no top dos 'pipes' entre -10% e -50%
+const pipes = document.getElementById("pipes");
+
+pipe.style.gap = (Math.floor(Math.random() * (185 - 145 + 1)) + 145).toString() + "%"; //Mexe no gap dos 'pipe' entre 145% e 185%
+pipe.style.top = (Math.floor(Math.random() * (41)) - 50).toString() + "%"; //Mexe no top dos 'pipe' entre -10% e -50%
+
+// document.body.appendChild(pipe.cloneNode(true));
+
 
 let birdSpeed = 5;
 let freeMove = false;
@@ -57,8 +62,24 @@ function update(timestamp) {
         groundRoofCollision();
     }
     groundMovement();
-    pipeMove();
+    // pipeMove();
     birdPipeCollision();
+}
+
+for (let i = 1; i <= 5; i ++){
+   
+    const pipesClone = pipe.cloneNode(true);
+    pipesClone.id = `pipe${i}`;
+    
+    pipesClone.style.gap = (Math.floor(Math.random() * (185 - 145 + 1)) + 145).toString() + "%"; //Mexe no gap dos 'pipe' entre 145% e 185%
+    pipesClone.style.top = (Math.floor(Math.random() * (41)) - 50).toString() + "%"; //Mexe no top dos 'pipe' entre -10% e -50%
+    
+    pipesClone.style.left = `${150 * i}px`;
+    
+    pipes.appendChild(pipesClone);
+    console.log(i);
+
+    // if (i > 3) i = 0;
 }
 
 window.addEventListener("keydown", (event) => {
@@ -197,7 +218,7 @@ function birdPipeCollision(){
 let pipeSpeed = 25;
 
 function pipeMove(){
-    pipes.style.left = ((parseFloat(getComputedStyle(pipes).left) || 0) -pipeSpeed * deltaTimeSec) + "px";
+    pipe.style.left = ((parseFloat(getComputedStyle(pipe).left) || 0) -pipeSpeed * deltaTimeSec) + "px";
 }
 
 // Debug: single shared interval to log positions every 500ms.
