@@ -94,27 +94,7 @@ function pipeSpawn(){
         console.log(i);
 
         i++;
-    }
-    
-    
-}
-
-for (let i = 1; i < 5; i++){
-   
-    // const pipesClone = pipe.cloneNode(true);
-    // pipesClone.id = `pipe${i}`;
-    
-    // pipesClone.style.gap = (Math.floor(Math.random() * (185 - 145 + 1)) + 145).toString() + "%"; //Mexe no gap dos 'pipe' entre 145% e 185%
-    // pipesClone.style.top = (Math.floor(Math.random() * (41)) - 50).toString() + "%"; //Mexe no top dos 'pipe' entre -10% e -50%
-    
-    // //Gap entre os 'pipe'
-    // pipesClone.style.left = `${150 * i}px`;
-    
-    // pipes.appendChild(pipesClone);
-    
-    // console.log(i);
-
-    // if (i > 3) i = 0;
+    }   
 }
 
 window.addEventListener("keydown", (event) => {
