@@ -31,6 +31,7 @@ let lastTimestamp = 0;
 let deltaTimeMs = 0;
 let deltaTimeSec = 0;
 
+let gameStart = false;
 
 function update(timestamp) {
     // Request the next frame
@@ -64,9 +65,12 @@ function update(timestamp) {
         
         groundRoofCollision();
     }
-    groundMovement();
-    pipeSpawn();
-    pipeMove();
+    
+    if (gameStart){
+        pipeSpawn();
+        pipeMove();
+        groundMovement();
+    }
     birdPipeCollision();
 }
 // Tela absoluta (recomendado debug)
@@ -110,6 +114,10 @@ window.addEventListener("keydown", (event) => {
 
     if(event.key.toLocaleLowerCase() === "b" && event.shiftKey && !event.repeat){
         freeMove = !freeMove;
+    }
+
+    if(event.key === " " && !event.repeat){
+        gameStart = true;
     }
 
     if(freeMove){
