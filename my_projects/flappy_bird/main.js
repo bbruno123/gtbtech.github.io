@@ -9,6 +9,9 @@ const pipe_bottom = document.getElementById("pipe_bottom");
 
 const pipes = document.getElementById("pipes");
 
+const overlay_left = document.getElementById("overlay_left");
+const overlay_right = document.getElementById("overlay_right");
+
 pipe.style.gap = (Math.floor(Math.random() * (185 - 145 + 1)) + 145).toString() + "%"; //Mexe no gap dos 'pipe' entre 145% e 185%
 pipe.style.top = (Math.floor(Math.random() * (41)) - 50).toString() + "%"; //Mexe no top dos 'pipe' entre -10% e -50%
 
@@ -28,41 +31,29 @@ let lastTimestamp = 0;
 let deltaTimeMs = 0;
 let deltaTimeSec = 0;
 
-let i = 0;
-let pipeQtd = 5;
-
-// let pipeMoveSpeedSec = 0;
-// const spawnInterval = 1.5; // segundos
 
 function update(timestamp) {
     // Request the next frame
     requestAnimationFrame(update);
-
+    
     // Skip first frame (lastTimestamp is 0)
     if (lastTimestamp === 0) {
         lastTimestamp = timestamp;
         return;
     }
-
+    
     // Calculate delta time in milliseconds
     deltaTimeMs = timestamp - lastTimestamp;
     
     // Convert to seconds for physics calculations
     deltaTimeSec = deltaTimeMs / 1000;
-
+    
     // Store the current timestamp for the next frame
     lastTimestamp = timestamp;
-
+    
     // Cap deltaTime to prevent huge jumps (e.g., when tab is inactive)
     if (deltaTimeSec > 0.1) deltaTimeSec = 0.1;
-
-    // pipeMoveSpeedSec += deltaTimeSec;
-    // if (pipeMoveSpeedSec >= 1) {
-    //     pipeMoveSpeedSec = 0;
-    // }else{
-    //     pipeMove();
-    // }
-
+    
     if (!isGameOver){
         
         if(isGravity){
@@ -70,16 +61,30 @@ function update(timestamp) {
                 gravity();
             }
         }
-    
+        
         groundRoofCollision();
     }
     groundMovement();
     pipeSpawn();
-    // pipeMove();
+    pipeMove();
     birdPipeCollision();
 }
+// Tela absoluta (recomendado debug)
+// console.log('Screen left:', background_top.getBoundingClientRect().left + 'px');
 
-let pipeRollBack = false;
+// Overlay Left
+overlay_left.style.width = background_top.getBoundingClientRect().left + 'px';
+overlay_left.style.height = "640px";
+
+//Overlay Right
+overlay_right.style.width = window.innerWidth - background_top.getBoundingClientRect().right + 'px';
+overlay_right.style.height = "640px";
+overlay_right.style.right = "0px";
+
+// let pipeRollBack = false;
+
+let i = 0;
+let pipeQtd = 5;
 
 function pipeSpawn(){
 
@@ -92,8 +97,9 @@ function pipeSpawn(){
         pipesClone.style.top = (Math.floor(Math.random() * (41)) - 50).toString() + "%"; //Mexe no top dos 'pipe' entre -10% e -50%
         
         //Gap entre os 'pipe'
-        pipesClone.style.left = `${150 * i}px`;
-        pipes.appendChild(pipesClone);
+        // pipesClone.style.left = `${185 * i + 850}px`;
+        pipesClone.style.left = `${8 * i + 65}vw`;
+        document.body.appendChild(pipesClone);
         // console.log(i);
 
         i++;
@@ -233,19 +239,19 @@ function birdPipeCollision(){
 
 }
 
-let pipeSpeed = 35;
+let pipeSpeed = 5;
 
-function pipeMove(){
-    const pipesXPosition = (parseFloat(getComputedStyle(pipes).left) || 0);
-    console.log(pipesXPosition);
+// function pipeMove(){
+//     const pipesXPosition = (parseFloat(getComputedStyle(pipes).left) || 0);
+//     console.log(pipesXPosition);
     
-    if (pipesXPosition < -50){
-        pipes.style.left = parseFloat("650") + "px";
-    }else {
-        pipes.style.left = ((parseFloat(getComputedStyle(pipes).left) || 0) -pipeSpeed * deltaTimeSec) + "px";
-        pipeRollBack = !pipeRollBack;
-    }
-}
+//     if (pipesXPosition < -50){
+//         pipes.style.left = parseFloat("650") + "px";
+//     }else {
+//         pipes.style.left = ((parseFloat(getComputedStyle(pipes).left) || 0) -pipeSpeed * deltaTimeSec) + "px";
+//         pipeRollBack = !pipeRollBack;
+//     }
+// }
 
 // let x = 0;
 // function pipeMove(){
@@ -258,6 +264,28 @@ function pipeMove(){
 //         pipeClone.style.left = ((parseFloat(getComputedStyle(pipeClone).left) || 0) -pipeSpeed * deltaTimeSec) + "px"
 //     } 
 // }
+
+function pipeMove(){
+
+    // Move TODOS clones suavinho com delta
+    document.querySelectorAll('.pipes').forEach(i => {
+        
+        let leftPx = parseFloat(getComputedStyle(i).left) || 0;
+        let leftVw = (leftPx / window.innerWidth) * 100;  // % viewport width
+
+        // Usa:
+        // console.log(`${leftVw.toFixed(2)}vw`);
+
+        // let left = parseFloat(getComputedStyle(i).left) || 0;
+        
+        i.style.left = (leftVw - pipeSpeed * deltaTimeSec) + 'vw';
+        
+        // Reset quando sai tela (reuse infinito)
+        if (leftVw < 25) {  // ajuste -350 pro seu pipe width
+            i.style.left = '65vw';
+        }
+    });
+}
 
 // Debug: single shared interval to log positions every 500ms.
 const DEBUG_INTERVAL_MS = 500;
