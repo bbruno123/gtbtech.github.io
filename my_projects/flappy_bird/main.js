@@ -31,7 +31,7 @@ let deltaTimeSec = 0;
 let i = 0;
 let pipeQtd = 5;
 
-// let spawnTimer = 0;
+// let pipeMoveSpeedSec = 0;
 // const spawnInterval = 1.5; // segundos
 
 function update(timestamp) {
@@ -56,8 +56,11 @@ function update(timestamp) {
     // Cap deltaTime to prevent huge jumps (e.g., when tab is inactive)
     if (deltaTimeSec > 0.1) deltaTimeSec = 0.1;
 
-    // if (spawnTimer >= spawnInterval) {
-    //     spawnTimer = 0;
+    // pipeMoveSpeedSec += deltaTimeSec;
+    // if (pipeMoveSpeedSec >= 1) {
+    //     pipeMoveSpeedSec = 0;
+    // }else{
+    //     pipeMove();
     // }
 
     if (!isGameOver){
@@ -72,7 +75,7 @@ function update(timestamp) {
     }
     groundMovement();
     pipeSpawn();
-    pipeMove();
+    // pipeMove();
     birdPipeCollision();
 }
 
@@ -91,7 +94,7 @@ function pipeSpawn(){
         //Gap entre os 'pipe'
         pipesClone.style.left = `${150 * i}px`;
         pipes.appendChild(pipesClone);
-        console.log(i);
+        // console.log(i);
 
         i++;
     }   
@@ -230,7 +233,7 @@ function birdPipeCollision(){
 
 }
 
-let pipeSpeed = 25;
+let pipeSpeed = 35;
 
 function pipeMove(){
     const pipesXPosition = (parseFloat(getComputedStyle(pipes).left) || 0);
@@ -243,6 +246,18 @@ function pipeMove(){
         pipeRollBack = !pipeRollBack;
     }
 }
+
+// let x = 0;
+// function pipeMove(){
+//     x++;
+//     const pipeClone = document.getElementById(`pipe${x}`);
+//     if(x > 4){
+//         x = 0;
+//     }
+//     if(pipeClone){
+//         pipeClone.style.left = ((parseFloat(getComputedStyle(pipeClone).left) || 0) -pipeSpeed * deltaTimeSec) + "px"
+//     } 
+// }
 
 // Debug: single shared interval to log positions every 500ms.
 const DEBUG_INTERVAL_MS = 500;

@@ -81,13 +81,14 @@ html, body {
 }
 
 #pipe {
-
+    
 }
 
 .pipes {
     position: absolute;
     display: flex;
     flex-direction: column;
+    height: 640px;
     left: 55%;
     top: -0%;
     gap: 0%;
@@ -106,5 +107,3 @@ html, body {
     position: relative;
     top: 0%;
 }
-
-
