@@ -80,6 +80,8 @@ body {
     z-index: 5;
 
     background-color: white;
+    
+    display: none;
 }
 
 #overlay_right {
@@ -93,6 +95,8 @@ body {
     z-index: 5;
 
     background-color: white;
+
+    display: none;
 }
 
 #background {
@@ -132,7 +136,7 @@ body {
 }
 
 #pipe {
-    display: none;
+    /* display: show; */
     left: 63vw;
 }
 
