@@ -247,17 +247,16 @@ function birdPipeCollision(){
 
 }
 
-let pipeSpeed = 5;
 
 // function pipeMove(){
-//     const pipesXPosition = (parseFloat(getComputedStyle(pipes).left) || 0);
-//     console.log(pipesXPosition);
+    //     const pipesXPosition = (parseFloat(getComputedStyle(pipes).left) || 0);
+    //     console.log(pipesXPosition);
     
-//     if (pipesXPosition < -50){
-//         pipes.style.left = parseFloat("650") + "px";
+    //     if (pipesXPosition < -50){
+        //         pipes.style.left = parseFloat("650") + "px";
 //     }else {
-//         pipes.style.left = ((parseFloat(getComputedStyle(pipes).left) || 0) -pipeSpeed * deltaTimeSec) + "px";
-//         pipeRollBack = !pipeRollBack;
+    //         pipes.style.left = ((parseFloat(getComputedStyle(pipes).left) || 0) -pipeSpeed * deltaTimeSec) + "px";
+    //         pipeRollBack = !pipeRollBack;
 //     }
 // }
 
@@ -269,12 +268,14 @@ let pipeSpeed = 5;
 //         x = 0;
 //     }
 //     if(pipeClone){
-//         pipeClone.style.left = ((parseFloat(getComputedStyle(pipeClone).left) || 0) -pipeSpeed * deltaTimeSec) + "px"
-//     } 
-// }
-
+    //         pipeClone.style.left = ((parseFloat(getComputedStyle(pipeClone).left) || 0) -pipeSpeed * deltaTimeSec) + "px"
+    //     } 
+    // }
+    
+let pipeSpeed = 5;
+    
 function pipeMove(){
-
+        
     // Move TODOS clones suavinho com delta
     document.querySelectorAll('.pipes').forEach(i => {
         

@@ -16,10 +16,19 @@ html, body {
 
     overflow: hidden;
 
-    background-color: black;
+    /* background-color: black; */
+}
+
+body {
+    /* margin-top: 10vh; */
 }
 
 /* @media (prefers-color-scheme: light) {
+    
+    body {
+        background-color: white;
+    }
+
     #overlay_left {
         background-color: white;
     }
@@ -27,9 +36,16 @@ html, body {
     #overlay_right {
         background-color: white;
     }
+    
+
 }
 
 @media (prefers-color-scheme: dark) {
+     
+    body {
+        background-color: black;
+    }
+
     #overlay_left {
         background-color: black;
     }
@@ -37,6 +53,10 @@ html, body {
     #overlay_right {
         background-color: black;
     }
+} */
+
+/* #UI {
+    position: absolute;
 } */
 
 #bird {
@@ -59,7 +79,7 @@ html, body {
 
     z-index: 5;
 
-    background-color: black;
+    background-color: white;
 }
 
 #overlay_right {
@@ -72,7 +92,7 @@ html, body {
 
     z-index: 5;
 
-    background-color: black;
+    background-color: white;
 }
 
 #background {
