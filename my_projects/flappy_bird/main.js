@@ -57,21 +57,22 @@ function update(timestamp) {
     
     if (!isGameOver){
         
+        if (gameStart){
+            pipeSpawn();
+            pipeMove();
+            groundMovement();
+            birdPipeCollision();
+        }
+
         if(isGravity){
             if(!freeMove){
                 gravity();
             }
         }
         
-        // groundRoofCollision();
+        groundRoofCollision();
     }
     
-    if (gameStart){
-    }
-    pipeSpawn();
-    // pipeMove();
-    // groundMovement();
-    birdPipeCollision();
 }
 // Tela absoluta (recomendado debug)
 // console.log('Screen left:', background_top.getBoundingClientRect().left + 'px');
@@ -161,13 +162,6 @@ window.addEventListener("keydown", (event) => {
                 jump();
             }
         }
-
-        // if(event.key.toLocaleLowerCase() === "a"){
-        //     background_bottom.style.left = (parseFloat(getComputedStyle(background_bottom).left) -birdSpeed) + "px";
-        // }
-        // if(event.key.toLocaleLowerCase() === "d"){
-        //     background_bottom.style.left = (parseFloat(getComputedStyle(background_bottom).left) +birdSpeed) + "px";
-        // }
     }
     
 });
@@ -211,10 +205,7 @@ let isGameOver = false;
 function groundRoofCollision(){
     const birdPosition = parseFloat(getComputedStyle(bird).top) || 0;
 
-    if (birdPosition > background_topBottom - 24){
-        isGameOver = true;
-
-    }else if (birdPosition < -10){
+    if (birdPosition > background_topBottom - 24 || birdPosition < -10){
         isGameOver = true;
     }
 
@@ -264,12 +255,12 @@ function birdPipeCollision(){
 
         //Colisão com o pipe de cima: overlap horizontal + parte superior do pássaro acima do fundo do pipe
         if(birdPositionRight > leftPipeTop && birdPositionTop < bottomPipeTop && birdPositionLeft < rightPipeTop){
-            console.log("pipe_top");
+            isGameOver = true;
         }
 
         //Colisão com o pipe de baixo: overlap horizontal + parte inferior do pássaro abaixo do topo do pipe
         if (birdPositionRight > leftPipeBottom && birdPositionLeft < rightPipeBottom && birdPositionBottom > topPipeBottom) {
-            console.log("pipe_bottom");
+            isGameOver = true;
         }
 
         i1++;
@@ -288,9 +279,6 @@ function birdPipeCollision(){
 //     x++;
 //     if ()
 // }
-
-console.log("oi");
-
 
 // function pipeMove(){
     //     const pipesXPosition = (parseFloat(getComputedStyle(pipes).left) || 0);

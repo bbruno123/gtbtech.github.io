@@ -81,7 +81,7 @@ body {
 
     background-color: white;
     
-    display: none;
+    /* display: none; */
 }
 
 #overlay_right {
@@ -96,7 +96,7 @@ body {
 
     background-color: white;
 
-    display: none;
+    /* display: none; */
 }
 
 #background {
@@ -136,7 +136,7 @@ body {
 }
 
 #pipe {
-    /* display: show; */
+    display: none;
     left: 63vw;
 }
 
