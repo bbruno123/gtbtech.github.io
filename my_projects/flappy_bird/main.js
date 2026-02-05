@@ -250,7 +250,7 @@ function birdPipeCollision(){
 
         // const pipeId = ;
         const pipe_top_i = document.getElementById(`pipe_top${i1}`);
-        const pipe_bottom_i = document.getElementById(`pipe_top${i1}`);
+        const pipe_bottom_i = document.getElementById(`pipe_bottom${i1}`);
 
         //PIPE_TOP:
         const leftPipeTop = pipe_top_i.getBoundingClientRect().left; //Left
