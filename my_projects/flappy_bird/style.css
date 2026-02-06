@@ -55,9 +55,12 @@ body {
     }
 } */
 
-/* #UI {
+#UI {
     position: absolute;
-} */
+    z-index: 8;
+
+    margin: 0.6vw 0vw 0vw 0.8vw;
+}
 
 #bird {
     position: absolute;
@@ -81,7 +84,7 @@ body {
 
     background-color: white;
     
-    /* display: none; */
+    display: none;
 }
 
 #overlay_right {
@@ -96,7 +99,7 @@ body {
 
     background-color: white;
 
-    /* display: none; */
+    display: none;
 }
 
 #background {
@@ -136,7 +139,7 @@ body {
 }
 
 #pipe {
-    display: none;
+    /* display: none; */
     left: 63vw;
 }
 
