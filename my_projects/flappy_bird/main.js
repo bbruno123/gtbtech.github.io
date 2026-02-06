@@ -277,6 +277,10 @@ let i1 = 0;
 
 // }
 
+// score.innerText = "1";
+let inCollisionPipeCenter = 0;
+let score_ = 0;
+
 function birdPipeCollision(){
     
     //Bird:
@@ -304,21 +308,26 @@ function birdPipeCollision(){
 
         // Colisão com o pipe de cima: overlap horizontal + parte superior do pássaro acima do fundo do pipe
         if((birdPositionRight > leftPipeTop) && (birdPositionTop < bottomPipeTop) && (birdPositionLeft < rightPipeTop)){
-            console.log("pipe_top");
+            // console.log("pipe_top");
         }
 
         //Colisão com o pipe de baixo: overlap horizontal + parte inferior do pássaro abaixo do topo do pipe
         if ((birdPositionRight > leftPipeBottom) && (birdPositionLeft < rightPipeBottom) && (birdPositionBottom > topPipeBottom)) {
-            console.log("pipe_bottom");
+            // console.log("pipe_bottom");
         }
+
 
         if ((birdPositionRight > leftPipeTop) && (birdPositionLeft < rightPipeTop)){
 
             if((birdPositionTop > bottomPipeTop && birdPositionBottom < topPipeBottom)){
-                console.log("pipe_colision");
+                
+                inCollisionPipeCenter++;
+                // console.log("pipe_colision");
             }
+
+        }else{
+            inCollisionPipeCenter = 0;
         }
-        
 
         i1++;
         
@@ -326,9 +335,13 @@ function birdPipeCollision(){
         i1 = 0;
         // console.clear();
     }
+    console.log(inCollisionPipeCenter);
+    
+    if (inCollisionPipeCenter === 1){
+        score.innerText = `${score_++}`;
+    }
 
     // console.log(i1);
-
 }
 
 // let x = 0;
@@ -419,6 +432,6 @@ function startDebugInterval() {
     "color: yellow;", "color: reset;", "color: yellow;",  "color: reset;", "color: yellow;", "color: reset;", "color: yellow;", "color: reset;", "color: yellow;", "color: reset;", "color: yellow;", "color: reset;", "color: yellow;", "color: reset;", "color: yellow;", "color: reset;", "color: yellow;", "color: reset;", "color: yellow;", "color: reset;");
     }, DEBUG_INTERVAL_MS);
 }
-startDebugInterval();
+// startDebugInterval();
 
 update();
