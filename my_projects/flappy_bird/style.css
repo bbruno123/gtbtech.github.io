@@ -57,9 +57,44 @@ body {
 
 #UI {
     position: absolute;
+
+    margin: 0.8vw 0vw 0vw 0vw;
     z-index: 8;
 
-    margin: 0.6vw 0vw 0vw 0.8vw;
+    left: 50%;
+
+    transform: translate(-50%);
+}
+
+@font-face {
+    font-family: '04b_19_Local';
+    src: url('./fonts/04B_19__.TTF') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#score {
+    font-family: '04b_19_Local', sans-serif;
+    font-size: 32px;
+
+    color: white;
+
+    /* 2. A borda preta grossa (contorno em todas as direções) */
+    text-shadow: 
+        -3px -3px 0 #000,  
+         3px -3px 0 #000,
+        -3px  3px 0 #000,
+         3px  3px 0 #000,
+         0px  3px 0 #000,
+         0px -3px 0 #000,
+         3px  0px 0 #000,
+        -3px  0px 0 #000;
+
+    /* 3. Ajuste para não embaçar os pixels */
+    image-rendering: pixelated;
+    -webkit-font-smoothing: none;
+
+    /* filter: drop-shadow(2px 2px 0px black); */
 }
 
 #bird {
