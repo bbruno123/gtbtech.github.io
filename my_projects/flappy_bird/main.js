@@ -60,8 +60,8 @@ function update(timestamp) {
     if (!isGameOver){
         
         if (gameStart){
-            pipeMove();
-            birdPipesCollision();
+            pipesMove();
+            // birdPipesCollision();
             groundRoofCollision();
         }
         
@@ -70,7 +70,7 @@ function update(timestamp) {
                 gravity();
             }
         }
-        pipeSpawn();
+        pipesSpawn();
         groundMovement();
         
     }
@@ -99,7 +99,7 @@ let i0 = 0;
 let i2 = 0;
 let pipeQtd = 5;
 
-function pipeSpawn(){
+function pipesSpawn(){
 
     if (i < pipeQtd){
         
@@ -111,7 +111,7 @@ function pipeSpawn(){
         pipesClone.style.top = (Math.floor(Math.random() * (41)) - 50).toString() + "%"; //Mexe no top dos 'pipe' entre -10% e -50%
         
         //Gap entre os 'pipe'
-        pipesClone.style.left = `${8 * i + 65}vw`;
+        pipesClone.style.left = `${12 * i + 67}vw`;
         document.body.appendChild(pipesClone);
         
         // console.log(i);
@@ -192,11 +192,11 @@ function jump(){
                     isGravity = true;
                 }, 100);
             }
-        }, 4 * i);
+        }, 12 * i);
     }
 }
 
-let gravityForce = 300; // pixels por segundo
+let gravityForce = 200; // pixels por segundo
 
 function gravity(){
     bird.style.top = ((parseFloat(getComputedStyle(bird).top) || 0) +gravityForce * deltaTimeSec) + "px";
@@ -306,68 +306,68 @@ function birdPipesCollision(){
     // console.log(i1);
 }
 
-function birdPipeCollision(){
+// function birdPipeCollision(){
     
-    //Bird:
-    const birdPositionTop = bird.getBoundingClientRect().top; //Top
-    const birdPositionRight = bird.getBoundingClientRect().right; //Right
-    const birdPositionLeft = bird.getBoundingClientRect().left; //Left
-    const birdPositionBottom = bird.getBoundingClientRect().bottom; //Bottom
+//     //Bird:
+//     const birdPositionTop = bird.getBoundingClientRect().top; //Top
+//     const birdPositionRight = bird.getBoundingClientRect().right; //Right
+//     const birdPositionLeft = bird.getBoundingClientRect().left; //Left
+//     const birdPositionBottom = bird.getBoundingClientRect().bottom; //Bottom
 
     
-    if (i1 < pipeQtd){
+//     if (i1 < pipeQtd){
 
-        // const pipeId = ;
-        const pipe_top = document.getElementById("pipe_top");
-        const pipe_bottom = document.getElementById("pipe_bottom");
+//         // const pipeId = ;
+//         const pipe_top = document.getElementById("pipe_top");
+//         const pipe_bottom = document.getElementById("pipe_bottom");
 
-        //PIPE_TOP:
-        const leftPipeTop = pipe_top.getBoundingClientRect().left; //Left
-        const bottomPipeTop = pipe_top.getBoundingClientRect().bottom; //Bottom
-        const rightPipeTop = pipe_top.getBoundingClientRect().right; //Right
+//         //PIPE_TOP:
+//         const leftPipeTop = pipe_top.getBoundingClientRect().left; //Left
+//         const bottomPipeTop = pipe_top.getBoundingClientRect().bottom; //Bottom
+//         const rightPipeTop = pipe_top.getBoundingClientRect().right; //Right
 
-        //PIPE_BOTTOM:
-        const leftPipeBottom = pipe_bottom.getBoundingClientRect().left; //Left
-        const topPipeBottom = pipe_bottom.getBoundingClientRect().top; //Bottom
-        const rightPipeBottom = pipe_bottom.getBoundingClientRect().right; //Right
+//         //PIPE_BOTTOM:
+//         const leftPipeBottom = pipe_bottom.getBoundingClientRect().left; //Left
+//         const topPipeBottom = pipe_bottom.getBoundingClientRect().top; //Bottom
+//         const rightPipeBottom = pipe_bottom.getBoundingClientRect().right; //Right
 
-        // Colisão com o pipe de cima: overlap horizontal + parte superior do pássaro acima do fundo do pipe
-        if((birdPositionRight > leftPipeTop) && (birdPositionTop < bottomPipeTop) && (birdPositionLeft < rightPipeTop)){
-            // console.log("pipe_top");
-        }
+//         // Colisão com o pipe de cima: overlap horizontal + parte superior do pássaro acima do fundo do pipe
+//         if((birdPositionRight > leftPipeTop) && (birdPositionTop < bottomPipeTop) && (birdPositionLeft < rightPipeTop)){
+//             // console.log("pipe_top");
+//         }
 
-        //Colisão com o pipe de baixo: overlap horizontal + parte inferior do pássaro abaixo do topo do pipe
-        if ((birdPositionRight > leftPipeBottom) && (birdPositionLeft < rightPipeBottom) && (birdPositionBottom > topPipeBottom)) {
-            // console.log("pipe_bottom");
-        }
+//         //Colisão com o pipe de baixo: overlap horizontal + parte inferior do pássaro abaixo do topo do pipe
+//         if ((birdPositionRight > leftPipeBottom) && (birdPositionLeft < rightPipeBottom) && (birdPositionBottom > topPipeBottom)) {
+//             // console.log("pipe_bottom");
+//         }
 
 
-        if ((birdPositionRight > leftPipeTop) && (birdPositionLeft < rightPipeTop)){
+//         if ((birdPositionRight > leftPipeTop) && (birdPositionLeft < rightPipeTop)){
 
-            if((birdPositionTop > bottomPipeTop && birdPositionBottom < topPipeBottom)){
+//             if((birdPositionTop > bottomPipeTop && birdPositionBottom < topPipeBottom)){
                 
-                inCollisionPipeCenter++;
-                // console.log("pipe_colision");
-            }
+//                 inCollisionPipeCenter++;
+//                 // console.log("pipe_colision");
+//             }
 
-        }else{
-            inCollisionPipeCenter = 0;
-        }
+//         }else{
+//             inCollisionPipeCenter = 0;
+//         }
 
-        i1++;
+//         i1++;
         
-    }else {
-        i1 = 0;
-        // console.clear();
-    }
-    console.log(inCollisionPipeCenter);
+//     }else {
+//         i1 = 0;
+//         // console.clear();
+//     }
+//     console.log(inCollisionPipeCenter);
     
-    if (inCollisionPipeCenter === 1){
-        score.innerText = `${++score_}`;
-    }
+//     if (inCollisionPipeCenter === 1){
+//         score.innerText = `${++score_}`;
+//     }
 
-    // console.log(i1);
-}
+//     // console.log(i1);
+// }
 
 // let x = 0;
 // function birdPipeCollision_(){
@@ -401,7 +401,7 @@ function birdPipeCollision(){
     
 let pipeSpeed = 5;
     
-function pipeMove(){
+function pipesMove(){
         
     // Move TODOS clones suavinho com delta
     document.querySelectorAll('.pipes').forEach(i => {
@@ -418,7 +418,7 @@ function pipeMove(){
         
         // Reset quando sai tela (reuse infinito)
         if (leftVw < 25) {  // ajuste -350 pro seu pipe width
-            i.style.left = '65vw';
+            i.style.left = '85vw';
         }
     });
 }
