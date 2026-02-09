@@ -60,10 +60,9 @@ function update(timestamp) {
     if (!isGameOver){
         
         if (gameStart){
-            // pipeSpawn();
-            // pipeMove();
-            // groundMovement();
-            // birdPipesCollision();
+            pipeMove();
+            birdPipesCollision();
+            groundRoofCollision();
         }
         
         if(isGravity){
@@ -71,9 +70,9 @@ function update(timestamp) {
                 gravity();
             }
         }
+        pipeSpawn();
+        groundMovement();
         
-        birdPipeCollision();
-        groundRoofCollision();
     }
     
 }
@@ -97,6 +96,7 @@ overlay_right.style.right = "0px";
 
 let i = 0;
 let i0 = 0;
+let i2 = 0;
 let pipeQtd = 5;
 
 function pipeSpawn(){
@@ -129,6 +129,11 @@ function pipeSpawn(){
         pipeBottomClone.id = `pipe_bottom${i0}`;
 
         i0++;
+    }
+
+    if (i2 < pipeQtd - 1){
+        scoredPipes[i0] = false;
+        i2++;
     }
 }
 
@@ -231,55 +236,75 @@ function groundMovement(){
 
 let i1 = 0;
 
-// function birdPipesCollision(){
-    
-//     //Bird:
-//     const birdPositionTop = bird.getBoundingClientRect().top; //Top
-//     const birdPositionRight = bird.getBoundingClientRect().right; //Right
-//     const birdPositionLeft = bird.getBoundingClientRect().left; //Left
-//     const birdPositionBottom = bird.getBoundingClientRect().bottom; //Bottom
-
-    
-//     if (i1 < pipeQtd){
-
-//         // const pipeId = ;
-//         const pipe_top_i = document.getElementById(`pipe_top${i1}`);
-//         const pipe_bottom_i = document.getElementById(`pipe_bottom${i1}`);
-
-//         //PIPE_TOP:
-//         const leftPipeTop = pipe_top_i.getBoundingClientRect().left; //Left
-//         const bottomPipeTop = pipe_top_i.getBoundingClientRect().bottom; //Bottom
-//         const rightPipeTop = pipe_top_i.getBoundingClientRect().right; //Right
-
-//         //PIPE_BOTTOM:
-//         const leftPipeBottom = pipe_bottom_i.getBoundingClientRect().left; //Left
-//         const topPipeBottom = pipe_bottom_i.getBoundingClientRect().top; //Bottom
-//         const rightPipeBottom = pipe_bottom_i.getBoundingClientRect().right; //Right
-
-//         //Colisão com o pipe de cima: overlap horizontal + parte superior do pássaro acima do fundo do pipe
-//         if(birdPositionRight > leftPipeTop && birdPositionTop < bottomPipeTop && birdPositionLeft < rightPipeTop){
-//             isGameOver = true;
-//         }
-
-//         //Colisão com o pipe de baixo: overlap horizontal + parte inferior do pássaro abaixo do topo do pipe
-//         if (birdPositionRight > leftPipeBottom && birdPositionLeft < rightPipeBottom && birdPositionBottom > topPipeBottom) {
-//             isGameOver = true;
-//         }
-
-//         i1++;
-        
-//     }else {
-//         i1 = 0;
-//         // console.clear();
-//     }
-
-//     // console.log(i1);
-
-// }
-
-// score.innerText = "1";
-let inCollisionPipeCenter = 0;
+let inCollisionPipeCenter = false;
+let scoredPipes = []; // Pipes que já deram ponto
 let score_ = 0;
+
+function birdPipesCollision(){
+   
+    //Bird:
+    const birdPositionTop = bird.getBoundingClientRect().top; //Top
+    const birdPositionRight = bird.getBoundingClientRect().right; //Right
+    const birdPositionLeft = bird.getBoundingClientRect().left; //Left
+    const birdPositionBottom = bird.getBoundingClientRect().bottom; //Bottom
+    
+    if (i1 < pipeQtd){
+
+        // const pipeId = ;
+        const pipe_top_i = document.getElementById(`pipe_top${i1}`);
+        const pipe_bottom_i = document.getElementById(`pipe_bottom${i1}`);
+
+        //PIPE_TOP:
+        const leftPipeTop = pipe_top_i.getBoundingClientRect().left; //Left
+        const bottomPipeTop = pipe_top_i.getBoundingClientRect().bottom; //Bottom
+        const rightPipeTop = pipe_top_i.getBoundingClientRect().right; //Right
+
+        //PIPE_BOTTOM:
+        const leftPipeBottom = pipe_bottom_i.getBoundingClientRect().left; //Left
+        const topPipeBottom = pipe_bottom_i.getBoundingClientRect().top; //Bottom
+        const rightPipeBottom = pipe_bottom_i.getBoundingClientRect().right; //Right
+
+        // Colisão com o pipe de cima: overlap horizontal + parte superior do pássaro acima do fundo do pipe
+        if((birdPositionRight > leftPipeTop) && (birdPositionTop < bottomPipeTop) && (birdPositionLeft < rightPipeTop)){
+            isGameOver = true;
+            // console.log("pipe_top");
+        }
+
+        //Colisão com o pipe de baixo: overlap horizontal + parte inferior do pássaro abaixo do topo do pipe
+        if ((birdPositionRight > leftPipeBottom) && (birdPositionLeft < rightPipeBottom) && (birdPositionBottom > topPipeBottom)) {
+            isGameOver = true;
+            // console.log("pipe_bottom");
+        }
+
+
+        if ((birdPositionRight > leftPipeTop) && (birdPositionLeft < rightPipeTop)){
+
+            if((birdPositionTop > bottomPipeTop && birdPositionBottom < topPipeBottom)){
+                
+                // Só pontua se esse pipe ainda não foi contado
+                if (!scoredPipes[i1]) {
+                    scoredPipes[i1] = true;
+                    score.innerText = `${++score_}`;
+                    
+                    //Verifica se todos são true e se sim reseta para false
+                    if (scoredPipes.every(p => p === true)){
+                        scoredPipes.fill(false);
+                        scoredPipes[i1] = true; // Mantém atual como true para não ponturar de novo
+                    }
+            
+                    console.log(scoredPipes);
+                }
+            }
+        }
+
+        i1++;
+        
+    }else {
+        i1 = 0;
+    }
+
+    // console.log(i1);
+}
 
 function birdPipeCollision(){
     
@@ -338,7 +363,7 @@ function birdPipeCollision(){
     console.log(inCollisionPipeCenter);
     
     if (inCollisionPipeCenter === 1){
-        score.innerText = `${score_++}`;
+        score.innerText = `${++score_}`;
     }
 
     // console.log(i1);
