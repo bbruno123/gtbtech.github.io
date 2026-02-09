@@ -61,7 +61,7 @@ function update(timestamp) {
         
         if (gameStart){
             pipesMove();
-            // birdPipesCollision();
+            birdPipesCollision();
             groundRoofCollision();
         }
         
