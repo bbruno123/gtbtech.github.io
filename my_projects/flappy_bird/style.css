@@ -63,6 +63,9 @@ body {
 
     left: 50%;
 
+    height: 640px;
+    width: 360px;
+
     transform: translate(-50%);
 }
 
@@ -73,9 +76,21 @@ body {
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'flappy_bird_local';
+    src: url('./fonts/Flappy-Bird.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 #score {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+
+
     font-family: '04b_19_Local', sans-serif;
-    font-size: 32px;
+    font-size: 190%;
 
     color: white;
 
@@ -97,8 +112,94 @@ body {
     /* filter: drop-shadow(2px 2px 0px black); */
 }
 
-#bird {
+#game_over {
     position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%);
+
+    background-color: transparent;
+    border: none;
+    /* padding: 3%; */
+
+    width: 80%;
+
+    font-family: '04b_19_Local', sans-serif;
+    font-size: 250%;
+    
+    color: #F8B520;
+
+    /* -webkit-text-stroke: 2px white;
+    paint-order: stroke fill; */
+
+    /* 2. A borda preta grossa (contorno em todas as direções) */
+    text-shadow: 
+        -2px -2px 0 #000,  
+         2px -2px 0 #000,
+        -2px  2px 0 #000,
+         2px  2px 0 #000,
+         0px  2px 0 #000,
+         0px -2px 0 #000,
+         2px  0px 0 #000,
+        -2px  0px 0 #000,
+        -4px -4px 0 #ffffff,  
+         4px -4px 0 #ffffff,
+        -4px  4px 0 #ffffff,
+         4px  4px 0 #ffffff,
+         0px  4px 0 #ffffff,
+         0px -4px 0 #ffffff,
+         4px  0px 0 #ffffff,
+        -4px  0px 0 #ffffff;
+
+    /* 3. Ajuste para não embaçar os pixels */
+    image-rendering: pixelated;
+    -webkit-font-smoothing: none;
+
+    /* cursor: none; */
+}
+
+#restart {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%);
+
+    background-color: #E1611A;
+
+    border: 2px solid black;
+    box-shadow: inset 0 0 0 3px white;
+    
+    padding: 2% 6%;
+
+    
+    font-family: '04b_19_Local', sans-serif;
+    font-size: 160%;
+    
+    color: white;
+
+    /* 2. A borda preta grossa (contorno em todas as direções) */
+    text-shadow: 
+        -2px -2px 0 #000,  
+         2px -2px 0 #000,
+        -2px  2px 0 #000,
+         2px  2px 0 #000,
+         0px  2px 0 #000,
+         0px -2px 0 #000,
+         2px  0px 0 #000,
+        -2px  0px 0 #000;
+
+    /* 3. Ajuste para não embaçar os pixels */
+    image-rendering: pixelated;
+    -webkit-font-smoothing: none;
+
+    /* filter: drop-shadow(2px 2px 0px black); */
+
+    cursor: pointer;
+}
+
+
+#bird {
+    position: relative;
     display: flex;
 
     top: 30%;
@@ -200,4 +301,8 @@ body {
 #pipe #pipe_bottom {
     position: relative;
     top: 0%;
+}
+
+.hidden {
+    display: none;
 }

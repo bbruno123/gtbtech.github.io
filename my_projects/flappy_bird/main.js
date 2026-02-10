@@ -14,6 +14,11 @@ const overlay_right = document.getElementById("overlay_right");
 
 const score = document.getElementById("score");
 
+const game_over = document.getElementById("game_over");
+const restart = document.getElementById("restart");
+
+const hidden = document.querySelector("hidden");
+
 pipe.style.gap = (Math.floor(Math.random() * (185 - 145 + 1)) + 145).toString() + "%"; //Mexe no gap dos 'pipe' entre 145% e 185%
 pipe.style.top = (Math.floor(Math.random() * (41)) - 50).toString() + "%"; //Mexe no top dos 'pipe' entre -10% e -50%
 
@@ -72,7 +77,10 @@ function update(timestamp) {
         }
         pipesSpawn();
         groundMovement();
-        
+
+    }else{
+        game_over.classList.remove("hidden");
+        restart.classList.remove("hidden");
     }
     
 }
@@ -99,6 +107,8 @@ let i0 = 0;
 let i2 = 0;
 let pipeQtd = 5;
 
+let pipesInitialPos = [];
+
 function pipesSpawn(){
 
     if (i < pipeQtd){
@@ -113,6 +123,11 @@ function pipesSpawn(){
         //Gap entre os 'pipe'
         pipesClone.style.left = `${12 * i + 67}vw`;
         document.body.appendChild(pipesClone);
+        
+        //Adiciona o 'left' dos 'pipe' a lista
+        pipesInitialPos.push(12 * i + 67);
+
+        console.log(pipesInitialPos);
         
         // console.log(i);
 
@@ -172,6 +187,28 @@ window.addEventListener("keydown", (event) => {
         }
     }
     
+});
+
+restart.addEventListener("click", function(event) {
+    score.innerText = '0';
+    score_ = 0;
+
+    for (let i = 0; i < pipeQtd; i++){
+        const p = document.getElementById(`pipe${i}`);
+        p.style.left = `${pipesInitialPos[i]}vw`;
+    }
+
+    bird.style.top = "30%";
+    bird.style.left = "45%";
+
+    isGameOver = false;
+    isGravity = false;
+    gameStart = false;
+    scoredPipes.fill(false);
+
+    game_over.classList.add("hidden");
+    restart.classList.add("hidden");
+
 });
 
 function jump(){
