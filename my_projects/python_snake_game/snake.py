@@ -31,6 +31,9 @@ max_colunm = max(o)
 
 running = True
 
+up = False
+right = False
+
 def display():
     while running == True:
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -38,6 +41,7 @@ def display():
         for i in range(len(grid)):
             print(grid[i])
         time.sleep(0.1)
+
         
         #Saber posição
         # for i in range(len(grid)):
@@ -46,9 +50,58 @@ def display():
         #             print(i, j)
 
 
+def moviment():
+    while running == True:
+
+        if up:
+            for i in range(len(grid)):
+                for j in range(len(grid)):
+                    if grid[i][j] == 'o':
+
+                        grid[i][j] = ''
+                        grid[i -1][j] = 'o'
+
+        if up == False:
+            for i in range(len(grid)):
+                for j in range(len(grid)):
+                    if grid[i][j] == 'o':
+
+
+                        if grid[i][j] == grid[len(grid) -1][j]:
+                            grid[i][j] = ''
+                            grid[0][j] = 'o'
+
+                        else:
+                            grid[i][j] = ''
+                            grid[i +1][j] = 'o'
+        
+        if right == False:
+            for i in range(len(grid)):
+                for j in range(len(grid)):
+                    if grid[i][j] == 'o':
+
+                        grid[i][j] = ''
+                        grid[i][j -1] = 'o'
+
+        if right == True:
+            for i in range(len(grid)):
+                for j in range(len(grid)):
+                    if grid[i][j] == 'o':
+
+                        if grid[i][j] == grid[i][max_colunm]:
+                            grid[i][j] = ''
+                            grid[i][0] = 'o'
+                        else:
+                            grid[i][j] = ''
+                            grid[i][j +1] = 'o'
+
+        time.sleep(0.5)
+
+
 pressed_keys = set()
 
 def key_press(k):
+    global up, right
 
     if k in pressed_keys:
         return
@@ -57,6 +110,14 @@ def key_press(k):
 
     try:
         if k.char == 'w':
+
+            up = True
+
+            # if up == False:
+            #     pass
+            # else:
+            #     up = True
+
             for i in range(len(grid)):
                 for j in range(len(grid)):
                     if grid[i][j] == 'o':
@@ -66,6 +127,13 @@ def key_press(k):
                         return
                         
         elif k.char == 's':
+            up = False
+
+            # if up == True:
+            #     pass
+            # else:
+            #     up = False
+
             for i in range(len(grid)):
                 for j in range(len(grid)):
                     if grid[i][j] == 'o':
@@ -79,8 +147,16 @@ def key_press(k):
                             grid[i][j] = ''
                             grid[i +1][j] = 'o'
                             return
-                     
+                        
         elif k.char == 'a':
+            
+            right = False
+
+            # if right == False:
+            #     pass
+            # else:
+            #     right = True
+
             for i in range(len(grid)):
                 for j in range(len(grid)):
                     if grid[i][j] == 'o':
@@ -89,6 +165,14 @@ def key_press(k):
                         grid[i][j -1] = 'o'
                         return
         elif k.char == 'd':
+
+            # right = True
+
+            # if right == True:
+            #     pass
+            # else:
+            #     right = False
+
             for i in range(len(grid)):
                 for j in range(len(grid)):
                     if grid[i][j] == 'o':
@@ -119,11 +203,15 @@ def key_release(k):
 display_thread = threading.Thread(target=display)
 display_thread.start()
 
+# display_thread1 = threading.Thread(target=moviment)
+# display_thread1.start()
+
 try:
     with keyboard.Listener(on_press=key_press, on_release=key_release) as listener:
         listener.join()
 
     display_thread.join()
+    # display_thread1.join()
 
 finally:
     running = False
