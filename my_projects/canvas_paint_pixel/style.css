@@ -1,0 +1,89 @@
+html, body{
+    margin: 0;
+    padding: 0;
+}
+
+#grid {
+    position: relative;
+}
+
+#blocos {
+    position: relative;
+}
+
+#grid_coluna_id {
+}
+
+#grid_linha_id {
+}
+
+#bloco_cor {
+    display: flex;
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    background-color: blue;
+}
+
+#paleta_cores {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: absolute;
+
+    top: 2%;
+    left: 2%;
+
+    padding-bottom: 7px;
+    padding-right: 7px;
+    padding-left: 7px;
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    border-radius: 5px;
+
+    gap: 4px;
+}
+
+.caixa_cor {
+    display: flex;
+    position: relative;
+
+    padding: 12px;
+
+    background-color: blue;
+
+    border-radius: 5px;
+    border: 1.5px solid black;
+
+    height: 35px;
+    width: 35px;
+}
+
+#texto {
+    text-align: center;
+    grid-column: 1 / -1;
+    margin: 2px 0 5px 0;
+    color: white;
+    font-size: 20px;
+}
+
+#vermelho { background-color: red; }
+#verde { background-color: green; }
+#azul { background-color: blue; }
+#amarelo { background-color: yellow; }
+#roxo { background-color: purple; }
+#aqua { background-color: aqua; }
+#fuchsia { background-color: fuchsia; }
+#laranja { background-color: orange; }
+#marrom { background-color: brown; }
+#preto { background-color: black; }
+#branco { background-color: white; }
+#cinza { background-color: gray; }
+#lima { background-color: lime; }
+#navy { background-color: navy; }
+#teal { background-color: teal; }
+#oliva { background-color: olive; }
+
+.hidden{
+    visibility: hidden;
+}
