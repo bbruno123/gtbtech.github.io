@@ -102,6 +102,24 @@ if (uma_vez === true){
     uma_vez = false;
 }
 
+let bloco_x = [];
+let bloco_y = [];
+
+function atualizarBlocos() {
+    bloco_x = [];
+    bloco_y = [];
+
+    for (let i = 0; i < largura; i += tamanhoBloco) {
+        bloco_x.push([i, i + tamanhoBloco]);
+    }
+
+    for (let i = 0; i < altura; i += tamanhoBloco) {
+        bloco_y.push([i, i + tamanhoBloco]);
+    }
+}
+
+atualizarBlocos();
+
 //Atribui o id do form a variável 'tamanho_grid'
 const tamanho_grid = document.querySelector("#tamanho_grid");
 
@@ -110,6 +128,9 @@ tamanho_grid.addEventListener("submit", (event) => {
 
     //Limpa a grid
     grid.innerHTML = "";
+
+    //Limpa os blocos
+    blocos.innerHTML = "";
 
     const tamanho_digitado = document.querySelector("#tamanho_digitado");
     
@@ -120,6 +141,8 @@ tamanho_grid.addEventListener("submit", (event) => {
 
     //Converte o valor de string para int
     tamanhoBloco = parseInt(tamanho_digitado.value);
+
+    atualizarBlocos();
     
     // console.log("Enviado:", tamanho_digitado.value);
 
@@ -174,18 +197,7 @@ tamanho_grid.addEventListener("submit", (event) => {
     }
 });
 
-let bloco_x = [];
-let bloco_y = [];
 
-//Cria uma lista com a área dos blocos x separado por outra lista
-for (let i = 0; i < largura; i += tamanhoBloco) {
-    bloco_x.push([i, i + tamanhoBloco]);
-}
-
-//Cria uma lista com a área dos blocos y separado por outra lista
-for (let i = 0; i < altura; i += tamanhoBloco) {
-    bloco_y.push([i, i + tamanhoBloco]);
-}
 
 // console.log(bloco_x);
 // console.log(bloco_y);
@@ -194,16 +206,17 @@ let apagar = false;
 
 //Se apertar '5' esconde ou mostra a grid
 document.addEventListener("keydown", (event) => {
-    if (event.key === "5" && !event.repeat){
+    if (event.key === "w" && !event.repeat){
         grid.classList.toggle("hidden");
     }
 
-    if (event.key === "1" && !event.repeat){
+    if (event.key === "q" && !event.repeat){
         apagar = !apagar;
     }
 
-    if (event.key === "2"){
+    if (event.key === "e"){
         paleta_cores.classList.toggle("hidden");
+        tamanho_grid.classList.toggle("hidden");
     }
 });
 
@@ -220,7 +233,6 @@ document.addEventListener("mousedown", (event) =>{
     if (tamanho_grid.contains(event.target)){
         return;
     }
-    
     
     // Se clicou na paleta, não faz nada na grid
     if (paleta_cores.contains(event.target)){
@@ -316,6 +328,8 @@ document.addEventListener("mousedown", (event) =>{
     bloco_cor_clone.style.display = "flex";
     bloco_cor_clone.style.left = `${x}px`;
     bloco_cor_clone.style.top = `${y}px`;
+    bloco_cor_clone.style.height = `${tamanhoBloco}px`;
+    bloco_cor_clone.style.width = `${tamanhoBloco}px`;
     bloco_cor_clone.style.backgroundColor = corSelecionada;
     
     let jaOcupado = false;
