@@ -1,5 +1,5 @@
 //Define o tamanho dos blocos
-const tamanhoBloco = 40;
+let tamanhoBloco = 40;
 
 //Pega a altura e largura da página
 const altura = document.documentElement.scrollHeight;
@@ -48,52 +48,131 @@ const bloco_cor = document.querySelector("#bloco_cor");
 
 bloco_cor.style.display = "none";
 
-//Cria o contador para dar os nomes as ids
-let contador = 0;
+//Faz rodar apenas na inicialização
+let uma_vez = true;
 
-//Duplica e aplica os parametros nas colunas com gap de 15px
-for (let i = 0; i < largura; i += tamanhoBloco){
+if (uma_vez === true){
+    //Cria o contador para dar os nomes as ids
+    let contador = 0;
 
-    const coluna = grid_coluna.cloneNode(true);
+    //Duplica e aplica os parametros nas colunas com gap de 15px
+    for (let i = 0; i < largura; i += tamanhoBloco){
 
-    coluna.id = `coluna_${contador}`;
-    
-    coluna.style.display = "flex";
-    coluna.style.position = "absolute";
-    coluna.style.width = "1px";
-    coluna.style.height = `${altura}px`;
-    coluna.style.left = `${i}px`;
-    coluna.style.top = "0px";
-    coluna.style.backgroundColor = "black";
-    coluna.classList.remove("hidden");
+        const coluna = grid_coluna.cloneNode(true);
 
-    grid.appendChild(coluna);
+        coluna.id = `coluna_${contador}`;
+        
+        coluna.style.display = "flex";
+        coluna.style.position = "absolute";
+        coluna.style.width = "1px";
+        coluna.style.height = `${altura}px`;
+        coluna.style.left = `${i}px`;
+        coluna.style.top = "0px";
+        coluna.style.backgroundColor = "black";
+        coluna.classList.remove("hidden");
 
-    contador += 1;
+        grid.appendChild(coluna);
+
+        contador += 1;
+    }
+
+    contador = 0;
+
+    //Duplica e aplica os parametros nas linhas com gap de 15px
+    for (let i = 0; i < altura; i += tamanhoBloco){
+
+        const linha = grid_linha.cloneNode(true);
+
+        linha.id = `linha_${contador}`;
+        
+        linha.style.display = "flex";
+        linha.style.position = "absolute";
+        linha.style.height = "1px";
+        linha.style.width = `${largura}px`;
+        linha.style.top = `${i}px`;
+        linha.style.left = "0px";
+        linha.style.backgroundColor = "black";
+        linha.classList.remove("hidden");
+
+        grid.appendChild(linha);
+
+        contador += 1;
+    }
+
+    uma_vez = false;
 }
 
-contador = 0;
+//Atribui o id do form a variável 'tamanho_grid'
+const tamanho_grid = document.querySelector("#tamanho_grid");
 
-//Duplica e aplica os parametros nas linhas com gap de 15px
-for (let i = 0; i < altura; i += tamanhoBloco){
+tamanho_grid.addEventListener("submit", (event) => {
+    event.preventDefault();
 
-    const linha = grid_linha.cloneNode(true);
+    //Limpa a grid
+    grid.innerHTML = "";
 
-    linha.id = `linha_${contador}`;
+    const tamanho_digitado = document.querySelector("#tamanho_digitado");
     
-    linha.style.display = "flex";
-    linha.style.position = "absolute";
-    linha.style.height = "1px";
-    linha.style.width = `${largura}px`;
-    linha.style.top = `${i}px`;
-    linha.style.left = "0px";
-    linha.style.backgroundColor = "black";
-    linha.classList.remove("hidden");
+    //Verifica se o número inserido é positivo e !NaN
+    if (isNaN(tamanho_digitado.value) || tamanho_digitado.value <= 0){
+        return;
+    }
 
-    grid.appendChild(linha);
+    //Converte o valor de string para int
+    tamanhoBloco = parseInt(tamanho_digitado.value);
+    
+    // console.log("Enviado:", tamanho_digitado.value);
 
-    contador += 1;
-}
+    //Limpa o form
+    tamanho_digitado.value = "";
+
+    //Cria o contador para dar os nomes as ids
+    let contador = 0;
+
+    //Duplica e aplica os parametros nas colunas com gap de 15px
+    for (let i = 0; i < largura; i += tamanhoBloco){
+
+        const coluna = grid_coluna.cloneNode(true);
+
+        coluna.id = `coluna_${contador}`;
+        
+        coluna.style.display = "flex";
+        coluna.style.position = "absolute";
+        coluna.style.width = "1px";
+        coluna.style.height = `${altura}px`;
+        coluna.style.left = `${i}px`;
+        coluna.style.top = "0px";
+        coluna.style.backgroundColor = "black";
+        coluna.classList.remove("hidden");
+
+        grid.appendChild(coluna);
+
+        contador += 1;
+    }
+
+    contador = 0;
+
+    //Duplica e aplica os parametros nas linhas com gap de 15px
+    for (let i = 0; i < altura; i += tamanhoBloco){
+
+        const linha = grid_linha.cloneNode(true);
+
+        linha.id = `linha_${contador}`;
+        
+        linha.style.display = "flex";
+        linha.style.position = "absolute";
+        linha.style.height = "1px";
+        linha.style.width = `${largura}px`;
+        linha.style.top = `${i}px`;
+        linha.style.left = "0px";
+        linha.style.backgroundColor = "black";
+        linha.classList.remove("hidden");
+
+        grid.appendChild(linha);
+
+        contador += 1;
+    }
+});
 
 let bloco_x = [];
 let bloco_y = [];
@@ -136,6 +215,11 @@ let corSelecionada = "blue";
 
 document.addEventListener("mousedown", (event) =>{
     // console.log(event.clientX, event.clientY);
+
+    // Se clicou no form, não faz nada na grid
+    if (tamanho_grid.contains(event.target)){
+        return;
+    }
     
     
     // Se clicou na paleta, não faz nada na grid

@@ -17,6 +17,13 @@ html, body{
 #grid_linha_id {
 }
 
+#tamanho_grid {
+    position: absolute;
+    left: 80%;
+    top: 90%;
+    z-index: 10;
+}
+
 #bloco_cor {
     display: flex;
     position: absolute;
