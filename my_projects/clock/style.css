@@ -1,0 +1,103 @@
+html, body {
+    padding: 0;
+    margin: 0;
+
+    height: 100%;
+    width: 100%;
+}
+
+#data {
+    position: absolute;
+
+    bottom: 0px;
+    right: 15px;
+
+    font-size: 150%;
+}
+
+#relogio {
+    position: absolute;
+
+    height: auto;
+    width: 55%;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+}
+
+#ponto {
+    position: absolute;
+
+    width: 2%;
+
+    aspect-ratio: 1 / 1;
+
+    left: 50%;
+    top: 50%;
+
+    border-radius: 50%;
+    background-color: black;
+
+    transform: translate(-50%, -50%);
+}
+
+#ponteiro_hora {
+    position: absolute;
+
+    height: 10%;
+    width: 1%;
+
+    aspect-ratio: 1 / 1;
+
+    left: 50%;
+    bottom: 50%;
+
+    border-radius: 10px;
+    background-color: black;
+
+    transform-origin: bottom center;
+
+    z-index: 3;
+}
+
+#ponteiro_minuto {
+    position: absolute;
+
+    height: 15%;
+    width: 1%;
+
+    aspect-ratio: 1 / 1;
+
+    left: 50%;
+    bottom: 50%;
+
+    border-radius: 10px;
+    background-color: blue;
+
+    transform-origin: bottom center;
+
+    z-index: 2;
+}
+
+#ponteiro_segundo {
+    position: absolute;
+
+    height: 18%;
+    width: 1%;
+
+    aspect-ratio: 1 / 1;
+
+    left: 50%;
+    bottom: 50%;
+
+    border-radius: 10px;
+    background-color: red;
+
+    transform-origin: bottom center;
+
+    z-index: 1;
+
+    transform: rotate(53deg);
+}
