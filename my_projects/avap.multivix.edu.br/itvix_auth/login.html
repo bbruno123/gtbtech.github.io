@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>AVA Multivix: Acesso ao site</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="favicon.ico">
+    <!-- Bootstrap Css -->
+    <link href="skote/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <!-- Icons Css -->
+    <link href="skote/icons.min.css" rel="stylesheet" type="text/css" />
+    <!-- App Css-->
+    <link href="skote/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div id="app">
+        <wrapper :style="pageload ? '' : 'visibility:hidden;'" class="d-flex flex-column min-vh-100">
+            <main class="flex-fill d-flex align-items-center">
+                <div class="container-fluid p-0 text-center">
+                    <div class="row g-0">
+
+                        <div class="col-xl-8 d-sm-none d-none d-xl-block">
+                            <div class="auth-full-bg pt-lg-5 p-4">
+                                <div class="w-100">
+                                    <div class="bg-overlay"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end col -->
+
+                        <div class="col-xl-4 my-auto">
+                            <div class="auth-full-page-content p-md-5 p-4">
+                                <div class="w-100">
+                                    <div class="row h-100">
+                                        <div class="col-12 my-auto">
+                                            <div class="w-100 mx-auto">
+                                                <div class="mb-4 mb-md-5">
+                                                    <a href="" class="d-block auth-logo text-center">
+                                                        <img src="login-logo.png" alt="" height="80%" width="80%">
+                                                    </a>
+                                                </div>
+                                                <div v-show="message.warning || message.info || message.danger || message.success" :class="'alert alert-' + (message.info ? 'info' : (message.success ? 'success' : (message.warning ? 'warning' : (message.danger ? 'danger' : ''))))" role="alert">
+                                                    {{ message.success ?? message.info ?? message.warning ?? message.danger ?? '' }}
+                                                </div>
+                                                <div v-show="formEnabled.login">
+                                                    <h5 class="text-primary">Bem-vindo de volta!</h5>
+                                                    <p class="text-muted">Entre com seu usuário e senha para continuar.</p>
+                                                    <form class="form-horizontal" @submit.prevent="tryLogin">
+                                                        <div class="mb-3">
+                                                            <input v-model="form.login.username" type="text" class="form-control" placeholder="Entre com seu usuário" autofocus>
+                                                        </div>
+                                                        <div class="input-group auth-pass-inputgroup ">
+                                                            <input v-model="form.login.password" :type="passwordToggle ? 'text' : 'password' " class="form-control"  placeholder="Entre com sua senha" aria-label="Password" aria-describedby="password-addon">
+                                                            <button class="btn btn-light " type="button" id="password-addon" @click="passwordToggle = (passwordToggle ? false : true)">
+                                                                <i :class="'mdi mdi-eye-' + (passwordToggle ? 'outline' : 'off')"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="mt-3 d-grid">
+                                                            <button type="submit" class="btn btn-info waves-effect waves-light" style="background-color: #800000; border-color: #800000">
+                                                                {{ form.login.submitting ? 'Acessando...' : 'Acessar' }}
+                                                            </button>
+                                                        </div>
+                                                        <div class="mt-3 text-center">
+                                                            <button @click="showForm('recoveryStep1')" type="button" class="btn btn-link"> Esqueceu seu usuário e/ou senha? Clique aqui </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div v-show="formEnabled.changeUsername">
+                                                    <div class="alert alert-warning">
+                                                        O usuário <strong>{{ form.login.username }}</strong> não se encontra cadastrado, pode não existir ou ter sido alterado.<br />
+                                                        Contudo, identificamos o usuário <strong>{{ form.changeUsername.username }}</strong> de <strong>{{ form.changeUsername.name }}</strong> com as credenciais informadas.<br />
+                                                        Se for você, clique em <strong>OK</strong> para substituir o usuário na tela de login. Se nao for você, clique em <strong>Cancelar</strong>.
+                                                    </div>
+                                                    <form  class="form-horizontal">
+                                                        <div class="mt-3 d-grid">
+                                                            <a @click="tryChangeUsername" class="btn btn-info waves-effect waves-light" style="background-color: #800000; border-color: #800000">
+                                                                OK
+                                                            </a>
+                                                        </div>
+                                                        <div class="mt-3 d-grid">
+                                                            <a @click="window.location.reload()" class="btn btn-secondary waves-effect waves-light">
+                                                                Cancelar
+                                                            </a>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div v-show="formEnabled.changePassword">
+                                                    <h5 class="text-primary">Senha expirada!</h5>
+                                                    <div class="alert alert-info">Sua senha expirou e é necessário alterá-la.</div>
+                                                    <form class="form-horizontal" @submit.prevent="tryChangePassword">
+                                                    <div class="mb-3 input-group auth-pass-inputgroup ">
+                                                            <input v-model="form.changePassword.password" :type="newPasswordToggle ? 'text' : 'password' " class="form-control"  placeholder="Entre com sua nova senha" aria-label="Password" aria-describedby="password-addon">
+                                                            <button class="btn btn-light " type="button" id="password-addon" @click="newPasswordToggle = (newPasswordToggle ? false : true)">
+                                                                <i :class="'mdi mdi-eye-' + (newPasswordToggle ? 'outline' : 'off')"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="input-group auth-pass-inputgroup ">
+                                                            <input v-model="form.changePassword.passwordConfirm" :type="newPasswordConfirmToggle ? 'text' : 'password' " class="form-control"  placeholder="Confirma sua nova senha" aria-label="Password" aria-describedby="password-addon">
+                                                            <button class="btn btn-light " type="button" id="password-addon" @click="newPasswordConfirmToggle = (newPasswordConfirmToggle ? false : true)">
+                                                                <i :class="'mdi mdi-eye-' + (newPasswordConfirmToggle ? 'outline' : 'off')"></i>
+                                                            </button>
+                                                        </div>
+                                                        <div class="mt-3 d-grid">
+                                                            <button @click="tryChangePassword" class="btn btn-info waves-effect waves-light" style="background-color: #800000; border-color: #800000">
+                                                                {{ form.changePassword.submitting ? 'Enviando...' : 'Enviar' }}
+                                                            </button>
+                                                        </div>
+                                                        <div class="mt-3 d-grid">
+                                                            <a @click="window.location.reload()" class="btn btn-secondary waves-effect waves-light">
+                                                                Cancelar
+                                                            </a>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div v-show="formEnabled.recoveryStep1">
+                                                    <h5 class="text-primary">Recuperar senha!</h5>
+                                                    <p class="text-muted">Informe o seu CPF e data de nascimento para continuar.</p>
+                                                    <form  class="form-horizontal" @submit.prevent="tryRecoveryStep1">
+                                                        <div class="mb-3">
+                                                            <input v-model="form.recoveryStep1.cpf" type="text" class="form-control" placeholder="Entre com seu CPF" autofocus>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <input v-model="form.recoveryStep1.dataNascimento" min='1900-01-01' max='2026-10-17' type="text" onblur="(!this.value ? this.type='text' : this.type='date')" onfocus="(this.type='date')" class="form-control" placeholder="Entre com sua data de nascimento" autofocus>
+                                                        </div>
+                                                        <div class="mt-3 d-grid">
+                                                            <button @click="tryRecoveryStep1" :disabled="form.recoveryStep1.submitting" class="btn btn-info waves-effect waves-light" style="background-color: #800000; border-color: #800000" type="submit">
+                                                                {{ form.recoveryStep1.submitting ? 'Buscando...' : 'Buscar' }}
+                                                            </button>
+                                                        </div>
+                                                        <div class="mt-3 text-center">
+                                                            <button @click="showForm('login')" type="button" class="btn btn-link"> Voltar para o Login. </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div v-show="formEnabled.recoveryStep2">
+                                                    <h5 class="text-primary">Recuperar senha!</h5>
+                                                    <div class="alert alert-info">Localizamos seu cadastro! <br />
+                                                        Seu usuário é <strong>{{ form.recoveryStep1.username }}</strong>. Encontramos também em nossa base que seu usuário está vinculado ao e-mail <strong>{{ form.recoveryStep1.partialEmail }}</strong>.<br />
+                                                        Para que possamos recuperar a senha, confirme seu e-mail que enviaremos o link.
+                                                    </div>
+                                                    <form  class="form-horizontal" @submit.prevent="tryRecoveryStep2">
+                                                        <div class="mb-3">
+                                                            <input v-model="form.recoveryStep2.email" type="email" required class="form-control" placeholder="Confirme o e-mail" autofocus>
+                                                        </div>
+                                                        <div class="mt-3 d-grid">
+                                                            <button @click="tryRecoveryStep2" :disabled="form.recoveryStep2.submitting" class="btn btn-info waves-effect waves-light" style="background-color: #800000; border-color: #800000" type="submit">
+                                                                {{ form.recoveryStep2.submitting ? 'Confirmando...' : 'Confirmar' }}
+                                                            </button>
+                                                        </div>
+                                                        <div class="mt-3 text-center">
+                                                            <button @click="showForm('recoveryStep1')" type="button" class="btn btn-link"> Voltar. </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                <div v-show="formEnabled.recoveryStep3">
+                                                    <form  class="form-horizontal">
+                                                        <div class="mt-3 text-center">
+                                                            <button @click="showForm('recoveryStep2')" type="button" class="btn btn-link"> Voltar. </button>
+                                                            <button @click="window.location.reload()" type="button" class="btn btn-link"> Ir para o Login. </button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end col -->
+                    </div>
+                </div>
+            </main>
+        </wrapper>
+    </div>
+
+
+    <!-- JAVASCRIPT -->
+    <script src="skote/jquery.min.js"></script>
+    <script src="skote/bootstrap.min.js"></script>
+    <script src="skote/metismenu.min.js"></script>
+    <script src="skote/simplebar.min.js"></script>
+    <script src="skote/node-waves.min.js"></script>
+    <!-- App js -->
+    <script src="skote/app.min.js"></script>
+    <!-- Vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                headers: {
+                    Accept: 'application/json',
+	  				'Content-Type': 'application/json',
+	  			},
+                pageload: false,
+                message: {
+                    success: null,
+                    info: null,
+                    warning: null,
+                    danger: null,
+                },
+                passwordToggle: false,
+                newPasswordToggle: false,
+                newPasswordConfirmToggle: false,
+                formEnabled: {
+                    login: true,
+                    recoveryStep1: false,
+                    recoveryStep2: false,
+                    recoveryStep3: false,
+                    changePassword: false,
+                    changeUsername: false,
+                },
+                form: {
+                    login: {
+                        username: null,
+                        password: null,
+                        submitting: false,
+                    },
+                    changePassword: {
+                        password: null,
+                        passwordConfirm: null,
+                        submitting: false,
+                    },
+                    changeUsername: {
+                        token: null,
+                        idmoodle: null,
+                        username: null,
+                        codpessoa: null,
+                        submitting: false,
+                    },
+                    recoveryStep1: {
+                        cpf: null,
+                        dataNascimento: null,
+                        partialEmail: null,
+                        username: null,
+                        submitting: false,
+                    },
+                    recoveryStep2: {
+                        email: null,
+                        submitting: false,
+                    },
+                },
+
+            },
+            mounted() {
+                this.pageload = true
+            },
+            methods: {
+                resetMessage() {
+                    this.message.success = null
+                    this.message.info = null
+                    this.message.warning = null
+                    this.message.danger = null
+                },
+                showForm(form) {
+                    this.formEnabled.login = false
+                    this.formEnabled.changePassword = false
+                    this.formEnabled.changeUsername = false
+                    this.formEnabled.recoveryStep1 = false
+                    this.formEnabled.recoveryStep2 = false
+                    this.formEnabled.recoveryStep3 = false
+                    if (form == 'login') this.formEnabled.login = true
+                    if (form == 'changePassword') this.formEnabled.changePassword = true
+                    if (form == 'changeUsername') this.formEnabled.changeUsername = true
+                    if (form == 'recoveryStep1') this.formEnabled.recoveryStep1 = true
+                    if (form == 'recoveryStep2') this.formEnabled.recoveryStep2 = true
+                    if (form == 'recoveryStep3') this.formEnabled.recoveryStep3 = true
+
+                },
+                tryLogin() {
+                    this.resetMessage()
+                    if (!this.form.login.username) return this.message.danger = 'O usuário é obrigatório'
+                    if (!this.form.login.password) return this.message.danger = 'A senha é obrigatória.'
+                    this.form.login.submitting = true
+                    console.log(`User: ${this.form.login.username}`)
+                    console.log(`Password: ${this.form.login.password}`)
+                    this.$http.post('', this.form.login, {headers: this.headers})
+                    .then(
+                        response => {
+                             console.log(response.body)
+                            // this.form.login.submitting = false
+                            if (response.data.message == 'sso') {
+				localStorage.setItem('token_appitvix', response.data.data.token.startsWith('ey') ? response.data.data.token : '' );
+                                this.sso(response.data.data.token, response.data.data.auth)
+                            }
+                            else if (response.data.message == 'change_username') {
+                                this.form.changeUsername = {
+                                    token: response.data.data.token,
+                                    idmoodle: response.data.data.idmoodle,
+                                    username: response.data.data.username,
+                                    codpessoa: response.data.data.codpessoa,
+                                    name: response.data.data.name,
+                                }
+                                return this.showForm('changeUsername')
+                            }
+                            
+                        },
+                        response => {
+                            // console.error(response.body)
+                            this.form.login.submitting = false
+                            if (response.data.message == 'login_failure') {
+                                return this.message.danger = 'Usuário ou senha inválidos'
+                            }
+                            else if (response.data.message == 'expired_password') {
+                                return this.showForm('changePassword')
+                            }
+                           
+                        },
+                    )
+                },
+                tryRecoveryStep1()
+	  			{
+                    this.resetMessage()
+	  				if (!this.form.recoveryStep1.cpf) return this.message.danger = 'O CPF é obrigatório'
+	  				if (!this.form.recoveryStep1.dataNascimento) return this.message.danger  = 'A data de nascimento é obrigatório'
+	  				this.form.recoveryStep1.submitting = true
+	  				this.$http.post('', this.form.recoveryStep1, {headers: this.headers})
+                    .then(
+                        response => {
+                            // console.log(response.body);
+                            this.form.recoveryStep1.submitting = false
+                            this.form.recoveryStep1.partialEmail = response.body.email
+                            this.form.recoveryStep1.username = response.body.usuario
+                            this.showForm('recoveryStep2')
+                        },
+                        response => {
+                            // console.error(response.body);
+                            this.message.danger = response.body
+                            this.form.recoveryStep1.submitting = false
+                        },
+                    )
+                },
+                tryRecoveryStep2()
+	  			{
+                    this.resetMessage()
+	  				if (!this.form.recoveryStep2.email) return this.message.danger = 'A confirmação do e-mail é obrigatório'
+                    this.form.recoveryStep2.submitting = true
+	  				let payload = {
+	  					cpf: this.form.recoveryStep1.cpf,
+	  					dataNascimento: this.form.recoveryStep1.dataNascimento,
+	  					email: this.form.recoveryStep2.email
+	  				};
+	  				this.$http.post('', payload, {headers: this.headers})
+                    .then(
+                        response => {
+                            // console.log(response.body);
+                            this.message.success = response.body
+                            this.form.recoveryStep2.submitting = false
+                            this.showForm('recoveryStep3')
+                        },
+                        response => {
+                            // console.error(response.body);
+                            this.message.warning = response.body
+                            this.form.recoveryStep2.submitting = false
+                            this.showForm('recoveryStep3')
+                        }
+                    )
+                },
+                tryChangePassword() 
+                {
+                    this.resetMessage()
+                    if (!this.form.changePassword.password) return this.message.danger = 'A nova senha é obrigatório'
+                    if (!this.form.changePassword.passwordConfirm) return this.message.danger = 'A confrimação da nova senha é obrigatório'
+	  				if (this.form.changePassword.password != this.form.changePassword.passwordConfirm) return this.message.danger = 'A senha e a confirmação de senha não conferem'
+                    this.form.changePassword.submitting = true
+                    let payload = {
+                        username: this.form.login.username,
+                        password_old: this.form.login.password,
+                        password: this.form.changePassword.password,
+                        password_confirmation: this.form.changePassword.password,
+                    }
+                    this.$http.post('', payload, {headers: this.headers})
+                    .then(
+                        response => {
+                            // console.log(response.body);
+                            this.sso(response.data.data.token, response.data.data.auth)
+                        },
+                        response => {
+                            // console.error(response.body);
+                            this.message.danger = response.body
+                            this.form.changePassword.submitting = false
+                        }
+                    )
+                },
+                tryChangeUsername() 
+                {
+                    this.resetMessage()
+                    this.form.changeUsername.submitting = true
+                    this.$http.post('', this.form.changeUsername, {headers: this.headers})
+                    .then(
+                        response => {
+                            // console.log(response.body);
+                            this.form.changeUsername.submitting = false
+                            this.form.login.username = this.form.changeUsername.username
+                            this.showForm('login')
+                        },
+                        response => {
+                            // console.error(response.body);
+                            this.message.danger = response.body
+                            this.form.changeUsername.submitting = false
+                        }
+                    )
+                },
+                sso(token, auth)
+                {
+                    window.location.replace("" + token + "&auth=" + auth)
+                },
+            }
+        });
+    </script>
+        <!-- Botão de libras -->
+    <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+        <div class="vw-plugin-top-wrapper"></div>
+    </div>
+    </div>
+    <script  src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+    <script>
+        new window.VLibras.Widget('//vlibras.gov.br/app');
+    </script>
+    
+
+<!-- MALU -->
+
+<script src="https://unpkg.com/blip-chat-widget" type="text/javascript"></script>
+<script>
+	(function () {
+		window.onload = function () {
+			new BlipChat()
+			.withAppKey('bWFsbHVibGlwY2hhdHJvdXRlcjo1M2Q0ZjRkZS0wZTIxLTRjYzEtYjM4My00ZGEyNzQyZmVmYzQ=')
+			.withButton({"color":"#f22c20","icon":"https://blipmediastore.blob.core.windows.net/public-medias/Media_1c6881cf-827e-4349-a498-f8fec951046c"})
+			.withCustomCommonUrl('https://multivix.chat.blip.ai/')
+			.withEventHandler(BlipChat.LEAVE_EVENT, function () {
+				localStorage.removeItem('blipSdkUAccount');
+				localStorage.removeItem('token_appitvix');
+	                 })
+			.withEventHandler(BlipChat.LOAD_EVENT, function () {
+				localStorage.removeItem('blipSdkUAccount');
+				document.getElementById('bubble-msg').click() })
+				.build();
+			}
+		})();
+	</script>
+	<style type="text/css">
+		.message-bubble{
+			font-family: 'Montserrat', sans-serif;
+			display: flex;
+			flex-flow: row wrap;
+			position: fixed;
+			background: #f7f7f7;
+			color: #464D56;
+			right: calc(80px + 2%);
+			max-width: 240px;
+			bottom: 60px;
+			padding: 10px;
+			border-radius: 13px 13px 2px 13px;
+			box-shadow: 0 5px 20px rgb(0 0 0 / 20%);
+			z-index: 980;
+			animation: toggle-bubble .5s ease-out;
+			margin-left: 15px;
+			transform-origin: 100% 100%;
+			font-weight: 600;
+			font-size: 16px;
+			line-height: 26px;
+		}
+		.message-bubble::after{
+			bottom: 0;
+			content: '';
+			position: absolute;
+			left: calc(100% - 15px);
+			width: 0;
+			border: 14px solid transparent;
+			border-bottom-color: #f7f7f7;
+			border-radius: 4.5px;
+		}
+		.message-bubble::before{
+			bottom:0;
+			content:'';
+			position:absolute;
+			left:calc(100% - 12px);
+			width:0;
+			border:15px solid transparent;
+			border-bottom-color:rgba(0,0,0,.20);
+			filter:blur(2px);
+			border-radius:4.5px;
+			opacity: .2;
+		}
+		.message-bubble p{margin:0}
+		.message-bubble p+p{margin-block:.4em 0}
+		.message-bubble .close-button {
+			position: absolute;
+			right: -22px;
+			top: 0px;
+			width: 15px;
+			height: 15px;
+			opacity: 1;
+			border: 2px solid #464D56;
+			border-radius: 50px;
+			background: #fff;
+		}
+		.message-bubble .close-button:hover{
+			opacity:1;
+			cursor:pointer
+		}
+		.message-bubble .close-button:before, .message-bubble .close-button:after {
+			position: absolute;
+			content: ' ';
+			height: 10px;
+			width: 2px;
+			background-color: #464D56;
+			left: calc(50% - 0.5px);
+			top: calc(50% - 5.9px);
+		}
+		.message-bubble .close-button:before{transform:rotate(45deg)}
+		.message-bubble .close-button:after{transform:rotate(-45deg)}
+		@-moz-keyframes toggle-bubble{from{transform:scale(.1)}to{transform:scale(1)}}
+		@-webkit-keyframes toggle-bubble{from{transform:scale(.1)}to{transform:scale(1)}}
+		@-o-keyframes toggle-bubble{from{transform:scale(.1)}to{transform:scale(1)}}
+		@keyframes  toggle-bubble{from{transform:scale(.1)}to{transform:scale(1)}}
+		
+		@media(max-width: 1099px){
+			.message-bubble p {
+				font-size: 12px !important;
+				line-height: 18px !important;
+			}
+			.message-bubble {
+				right: calc(91px + 2%);
+				max-width: 187px;
+				bottom: 50px;
+			}
+		}
+	</style>
+
+
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a4bc21ea4afb28e7',t:'MTc5MjIwNjg1OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+</html>
